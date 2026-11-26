@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio013 | Exhibition Design & Allestimenti Fieristici Internazionali</title>
+    <meta name="description" content="Studio013: progettazione e allestimento fiere chiavi in mano. 20 anni di esperienza in design espositivo, medicale, industria, automotive e luxury.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#268988',
+                        light: '#FFFFFF',
+                        'light-alt': '#F7F8F8',
+                        dark: '#0E1012',
+                        'dark-alt': '#16191D',
+                        'text-main': '#141618',
+                        'text-body': '#5C6268',
+                        'text-tech': '#999A9C',
+                    },
+                    fontFamily: {
+                        display: ['Space Grotesk', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    letterSpacing: {
+                        'tight-display': '-0.03em',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: #141618; }
+        .font-display { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.03em; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .grid-line { border: 1px solid rgba(153, 154, 156, 0.15); }
+        .grid-line-dark { border: 1px solid rgba(255, 255, 255, 0.08); }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F7F8F8; }
+        ::-webkit-scrollbar-thumb { background: #268988; border-radius: 4px; }
+        
+        .img-zoom-container { overflow: hidden; }
+        .img-zoom-container img { transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .img-zoom-container:hover img { transform: scale(1.05); }
+        
+        #lightbox { backdrop-filter: blur(12px); background-color: rgba(14, 16, 18, 0.95); }
+        #privacy-modal { backdrop-filter: blur(12px); background-color: rgba(14, 16, 18, 0.85); }
+        #privacy-modal .modal-body::-webkit-scrollbar { width: 6px; }
+        #privacy-modal .modal-body::-webkit-scrollbar-thumb { background: rgba(38, 137, 136, 0.4); border-radius: 3px; }
+        
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+
+        .blueprint-bg {
+            background-color: #0E1012;
+            background-image: linear-gradient(rgba(38, 137, 136, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(38, 137, 136, 0.04) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .scanner-line { box-shadow: 0 0 20px rgba(38, 137, 136, 0.9), -12px 0 28px rgba(38, 137, 136, 0.25); }
+        .hotspot { opacity: 0; transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); pointer-events: none; }
+        .hotspot.active { opacity: 1; pointer-events: auto; }
+        .hotspot::before { content: ''; position: absolute; inset: -8px; border: 1px solid #268988; border-radius: 50%; animation: pulse-ring 2s infinite; }
+        @keyframes pulse-ring { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; }
+        input[type=range]::-moz-range-thumb { border: none; }
+    </style>
+</head>
+<body id="top" class="antialiased overflow-x-hidden">
+
+    <!-- Header Sticky Glassmorphism -->
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex-shrink-0">
+                <svg width="100" height="100" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 lg:w-14 lg:h-14">
+                    <rect x="4" y="4" width="132" height="132" stroke="#268988" stroke-width="4"/>
+                    <text x="70" y="60" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="22" fill="#2A2B2D" text-anchor="middle" letter-spacing="0.1em">STUDIO</text>
+                    <text x="70" y="115" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="56" fill="#999A9C" text-anchor="middle" letter-spacing="-0.02em">013</text>
+                </svg>
+            </a>
+
+            <nav class="hidden lg:flex items-center gap-10">
+                <a href="index.html" class="font-mono text-xs text-primary uppercase tracking-widest border-b-2 border-primary pb-1" data-i18n="nav_home">Home</a>
+                <a href="studio013.html" class="font-mono text-xs text-text-body uppercase tracking-widest hover:text-primary transition-colors duration-300" data-i18n="nav_studio">Studio013</a>
+                <a href="#portfolio" class="font-mono text-xs text-text-body uppercase tracking-widest hover:text-primary transition-colors duration-300" data-i18n="nav_projects">Progetti</a>
+                <a href="#configurator" class="font-mono text-xs text-text-body uppercase tracking-widest hover:text-primary transition-colors duration-300" data-i18n="nav_contacts">Contatti</a>
+            </nav>
+
+            <div class="flex items-center gap-6">
+                <div class="hidden md:flex items-center bg-light-alt rounded-sm p-1 border border-gray-200">
+                    <button id="lang-it" class="font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-sm transition-all bg-primary text-white" aria-pressed="true" onclick="setLanguage('it')">IT</button>
+                    <span class="w-px h-4 bg-gray-300 mx-1"></span>
+                    <button id="lang-en" class="font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-sm transition-all text-text-body hover:text-primary" aria-pressed="false" onclick="setLanguage('en')">EN</button>
+                    <span class="w-px h-4 bg-gray-300 mx-1"></span>
+                    <button id="lang-hr" class="font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-sm transition-all text-text-body hover:text-primary" aria-pressed="false" onclick="setLanguage('hr')">HR</button>
+                </div>
+
+                <a href="#configurator" class="hidden lg:inline-flex items-center gap-2 bg-primary text-white px-6 py-3 font-mono text-xs uppercase tracking-widest hover:bg-[#1f6e6d] transition-all duration-300 group" data-i18n="cta_nav">
+                    Richiedi un progetto
+                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
+                <button id="mobile-menu-btn" class="lg:hidden text-text-main">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-dark transform translate-x-full transition-transform duration-500 flex flex-col justify-center items-center gap-8 lg:hidden">
+        <button id="close-mobile-menu" class="absolute top-6 right-6 text-white">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div class="flex items-center bg-dark-alt rounded-sm p-1 border border-white/10 mb-4">
+            <button class="font-mono text-xs uppercase tracking-widest px-4 py-2 rounded-sm transition-all bg-primary text-white" onclick="setLanguage('it')">IT</button>
+            <span class="w-px h-4 bg-white/20 mx-1"></span>
+            <button class="font-mono text-xs uppercase tracking-widest px-4 py-2 rounded-sm transition-all text-text-tech hover:text-white" onclick="setLanguage('en')">EN</button>
+            <span class="w-px h-4 bg-white/20 mx-1"></span>
+            <button class="font-mono text-xs uppercase tracking-widest px-4 py-2 rounded-sm transition-all text-text-tech hover:text-white" onclick="setLanguage('hr')">HR</button>
+        </div>
+        <a href="index.html" class="font-display text-3xl text-white hover:text-primary transition-colors" data-i18n="nav_home">Home</a>
+        <a href="studio013.html" class="font-display text-3xl text-text-tech hover:text-primary transition-colors" data-i18n="nav_studio">Studio013</a>
+        <a href="#portfolio" class="font-display text-3xl text-text-tech hover:text-primary transition-colors" data-i18n="nav_projects">Progetti</a>
+        <a href="#configurator" class="font-display text-3xl text-text-tech hover:text-primary transition-colors" data-i18n="nav_contacts">Contatti</a>
+    </div>
+
+    <main>
+        <!-- Hero Section Architettonica -->
+        <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-light-alt overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none" style="background-image: linear-gradient(#141618 1px, transparent 1px), linear-gradient(90deg, #141618 1px, transparent 1px); background-size: 40px 40px;"></div>
+            
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12">
+                <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                    <div class="lg:col-span-5 gsap-reveal">
+                        <span class="font-mono text-xs text-primary uppercase tracking-[0.2em] mb-6 block" data-i18n="hero_tag">[ 00 / HOME ]</span>
+                        <h1 class="font-display text-5xl lg:text-7xl font-bold text-text-main leading-[1.1] mb-8" data-i18n="hero_title">
+                            Tutto il mondo <br><span class="text-primary">delle fiere.</span>
+                        </h1>
+                        <p class="font-body text-text-body text-lg leading-relaxed mb-10 max-w-md" data-i18n="hero_subtitle">
+                            Le fiere sono eventi sempre più importanti per le aziende. Il modo di presentare ed esporre i prodotti ha un’importanza cruciale: l’azienda è il suo prodotto.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="#portfolio" class="inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-4 font-mono text-xs uppercase tracking-widest hover:bg-[#1f6e6d] transition-all duration-300 group" data-i18n="hero_cta_explore">
+                                Esplora i progetti
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                            </a>
+                            <a href="#configurator" class="inline-flex items-center justify-center gap-2 border border-text-main text-text-main px-8 py-4 font-mono text-xs uppercase tracking-widest hover:bg-text-main hover:text-white transition-all duration-300" data-i18n="hero_cta_request">
+                                Richiedi un progetto
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:col-span-7 relative gsap-reveal-img">
+                        <div class="relative aspect-[4/3] lg:aspect-[16/10] grid-line bg-white p-2 lg:p-4">
+                            <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary -mt-1 -ml-1"></div>
+                            <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-primary -mb-1 -mr-1"></div>
+                            <img src="IMG_20211021_191908-scaled.jpg" alt="Sarandrea Luxury Exhibition" class="w-full h-full object-cover">
+                            <div class="absolute bottom-6 left-6 bg-dark/80 backdrop-blur-sm px-4 py-2">
+                                <span class="font-mono text-[10px] text-white uppercase tracking-widest">Sarandrea Luxury / Fashion & Editoria</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezione Metodo & Servizi (Bento Grid) -->
+        <section class="py-24 bg-white">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12">
+                <div class="mb-16 gsap-reveal">
+                    <span class="font-mono text-xs text-primary uppercase tracking-[0.2em] mb-4 block" data-i18n="method_tag">[ 01 / METODO ]</span>
+                    <h2 class="font-display text-4xl lg:text-5xl font-bold text-text-main" data-i18n="method_title">Efficienza e professionalità.</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-200 border border-gray-200">
+                    <div class="bg-white p-8 lg:p-12 hover:bg-light-alt transition-colors duration-500 group gsap-reveal">
+                        <span class="font-mono text-xs text-text-tech mb-6 block">[ 01 ]</span>
+                        <h3 class="font-display text-2xl font-bold text-text-main mb-4 group-hover:text-primary transition-colors" data-i18n="method_c1_title">Azienda Giovane e Dinamica</h3>
+                        <p class="font-body text-text-body leading-relaxed" data-i18n="method_c1_desc">Studio 013 si presenta come azienda giovane e dinamica. Efficienza e professionalità sono i concetti base su cui fondiamo il ns. lavoro.</p>
+                    </div>
+                    <div class="bg-white p-8 lg:p-12 hover:bg-light-alt transition-colors duration-500 group gsap-reveal">
+                        <span class="font-mono text-xs text-text-tech mb-6 block">[ 02 ]</span>
+                        <h3 class="font-display text-2xl font-bold text-text-main mb-4 group-hover:text-primary transition-colors" data-i18n="method_c2_title">Esperienza Ventennale</h3>
+                        <p class="font-body text-text-body leading-relaxed" data-i18n="method_c2_desc">La società con personale di esperienza ventennale vi offre un servizio di collaborazione per predisporre allestimenti completi e di alta qualità.</p>
+                    </div>
+                    <div class="bg-white p-8 lg:p-12 hover:bg-light-alt transition-colors duration-500 group gsap-reveal">
+                        <span class="font-mono text-xs text-text-tech mb-6 block">[ 03 ]</span>
+                        <h3 class="font-display text-2xl font-bold text-text-main mb-4 group-hover:text-primary transition-colors" data-i18n="method_c3_title">Copertura a 360 Gradi</h3>
+                        <p class="font-body text-text-body leading-relaxed" data-i18n="method_c3_desc">Siamo in grado di soddisfare ogni tipo di richiesta: dal noleggio alla vendita, alla grafica, al multimedia.</p>
+                    </div>
+                    <div class="md:col-span-2 lg:col-span-3 bg-dark p-8 lg:p-12 hover:bg-dark-alt transition-colors duration-500 group gsap-reveal">
+                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                            <div>
+                                <span class="font-mono text-xs text-primary mb-6 block" data-i18n="method_c4_tag">[ 04 / SICUREZZA ]</span>
+                                <h3 class="font-display text-2xl lg:text-3xl font-bold text-white mb-4" data-i18n="method_c4_title">Certificazioni e Sicurezza Totale</h3>
+                                <p class="font-body text-text-tech leading-relaxed max-w-2xl" data-i18n="method_c4_desc">I materiali forniti per l’allestimento sono accompagnati da certificazioni di legge, dichiarazioni di conformità, calcoli statici di resistenza e vengono installati a regola d’arte per garantirne la totale sicurezza.</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <svg class="w-16 h-16 text-primary opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULO 1: SCANNER INGEGNERISTICO & ANATOMIA COSTRUTTIVA -->
+        <section id="scanner-section" class="py-24 blueprint-bg text-white relative overflow-hidden">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12">
+                <div class="text-center mb-12 gsap-reveal">
+                    <span class="font-mono text-xs text-primary uppercase tracking-[0.2em] mb-4 block" data-i18n="scanner_tag">[ 02 // VERIFICA INGEGNERISTICA & COSTRUZIONE ]</span>
+                    <h2 class="font-display text-4xl lg:text-5xl font-bold mb-6" data-i18n="scanner_title">Dalla precisione del render 3D alla realtà costruttiva in fiera.</h2>
+                    <p class="font-body text-text-tech max-w-3xl mx-auto leading-relaxed" data-i18n="scanner_subtitle">Fedeltà assoluta tra progetto esecutivo e realizzazione chiavi in mano. Ogni dettaglio è ingegnerizzato per garantire impatto scenografico, sicurezza strutturale e perfetta corrispondenza con il concept approvato.</p>
+                </div>
+
+                <div class="gsap-reveal">
+                    <div id="scanner-viewport" class="aspect-[4/3] w-full max-w-5xl mx-auto relative overflow-hidden select-none border border-white/15 bg-[#0E1012] shadow-2xl rounded-sm" style="--scan-pos: 50%;">
+                        <img src="IMG_20211021_191908-scaled.jpg" alt="Stand Finito" class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none block z-10" draggable="false">
+                        <div class="absolute top-4 right-4 z-20 bg-[#0E1012]/80 backdrop-blur-md border border-[#268988]/40 px-3 py-1.5 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-[#268988] animate-pulse"></span>
+                            <span class="font-mono text-[10px] text-white uppercase tracking-widest" data-i18n="scan_label_real">[ 02 // STAND FINITO CHIAVI IN MANO ]</span>
+                        </div>
+
+                        <div class="absolute inset-0 w-full h-full overflow-hidden z-20" style="clip-path: inset(0 calc(100% - var(--scan-pos)) 0 0); will-change: clip-path;">
+                            <img src="Allestimento dello Stand in Costruzione.png" alt="Produzione e Montaggio" class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none block" draggable="false">
+                            <div class="absolute inset-0 opacity-[0.08]" style="background-image: linear-gradient(#268988 1px, transparent 1px), linear-gradient(90deg, #268988 1px, transparent 1px); background-size: 40px 40px;"></div>
+                            <div class="absolute top-8 left-8 w-4 h-4 border-t-2 border-l-2 border-[#268988]"></div>
+                            <div class="absolute top-8 right-8 w-4 h-4 border-t-2 border-r-2 border-[#268988]"></div>
+                            <div class="absolute bottom-8 left-8 w-4 h-4 border-b-2 border-l-2 border-[#268988]"></div>
+                            <div class="absolute bottom-8 right-8 w-4 h-4 border-b-2 border-r-2 border-[#268988]"></div>
+                            <div class="absolute top-4 left-4 bg-[#0E1012]/80 backdrop-blur-md border border-[#268988]/40 px-3 py-1.5">
+                                <span class="font-mono text-[10px] text-[#268988] uppercase tracking-widest" data-i18n="scan_label_cad">[ 01 // PRODUZIONE & MONTAGGIO ]</span>
+                            </div>
+                            <div class="absolute bottom-8 left-8 font-mono text-[10px] text-[#268988] bg-[#0E1012]/80 px-2 py-1 border border-[#268988]/30" data-i18n="cad_quote_1">QUOTA ALZATO: +4.500 mm</div>
+                            <div class="absolute bottom-8 right-8 font-mono text-[10px] text-[#268988] bg-[#0E1012]/80 px-2 py-1 border border-[#268988]/30" data-i18n="cad_quote_2">SUPERFICIE: 48 m²</div>
+                        </div>
+
+                        <div id="hotspot-1" class="hotspot absolute top-[82%] left-[22%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#268988]/20 border border-[#268988] cursor-pointer group z-40" onclick="triggerHotspot(1)">
+                            <div class="absolute inset-0 rounded-full bg-[#268988] animate-ping opacity-75"></div>
+                            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 bg-[#0E1012] border border-[#268988] px-3 py-2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                                <span class="font-mono text-[10px] text-[#268988] uppercase" data-i18n="anatomy_1_title">01 / Pedana & Struttura Base</span>
+                            </div>
+                        </div>
+                        <div id="hotspot-2" class="hotspot absolute top-[24%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#268988]/20 border border-[#268988] cursor-pointer group z-40" onclick="triggerHotspot(2)">
+                            <div class="absolute inset-0 rounded-full bg-[#268988] animate-ping opacity-75"></div>
+                            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 bg-[#0E1012] border border-[#268988] px-3 py-2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                                <span class="font-mono text-[10px] text-[#268988] uppercase" data-i18n="anatomy_2_title">02 / Involucro & Falegnameria</span>
+                            </div>
+                        </div>
+                        <div id="hotspot-3" class="hotspot absolute top-[43%] left-[28%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#268988]/20 border border-[#268988] cursor-pointer group z-40" onclick="triggerHotspot(3)">
+                            <div class="absolute inset-0 rounded-full bg-[#268988] animate-ping opacity-75"></div>
+                            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 bg-[#0E1012] border border-[#268988] px-3 py-2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                                <span class="font-mono text-[10px] text-[#268988] uppercase" data-i18n="anatomy_3_title">03 / Lightbox & Illuminotecnica</span>
+                            </div>
+                        </div>
+                        <div id="hotspot-4" class="hotspot absolute top-[47%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#268988]/20 border border-[#268988] cursor-pointer group z-40" onclick="triggerHotspot(4)">
+                            <div class="absolute inset-0 rounded-full bg-[#268988] animate-ping opacity-75"></div>
+                            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 bg-[#0E1012] border border-[#268988] px-3 py-2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                                <span class="font-mono text-[10px] text-[#268988] uppercase" data-i18n="anatomy_4_title">04 / Maxi-Schermo LEDwall</span>
+                            </div>
+                        </div>
+                        <div id="hotspot-5" class="hotspot absolute top-[68%] left-[52%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#268988]/20 border border-[#268988] cursor-pointer group z-40" onclick="triggerHotspot(5)">
+                            <div class="absolute inset-0 rounded-full bg-[#268988] animate-ping opacity-75"></div>
+                            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 bg-[#0E1012] border border-[#268988] px-3 py-2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                                <span class="font-mono text-[10px] text-[#268988] uppercase" data-i18n="anatomy_5_title">05 / Reception & Arredi su Misura</span>
+                            </div>
+                        </div>
+
+                        <div class="absolute top-0 bottom-0 w-[2px] bg-[#268988] pointer-events-none z-30 scanner-line" style="left: var(--scan-pos);">
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[#0E1012] border-2 border-[#268988] flex items-center justify-center shadow-xl z-40">
+                                <svg class="w-6 h-6 text-[#268988]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path></svg>
+                            </div>
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 mt-10 bg-[#0E1012] border border-[#268988] px-3 py-1.5 whitespace-nowrap z-40">
+                                <span id="telemetry-badge" class="font-mono text-[10px] text-[#268988] uppercase tracking-widest">SCAN: 50% | CANTIERE ◄ ► FINITO</span>
+                            </div>
+                        </div>
+
+                        <input type="range" min="0" max="100" value="50" id="slider-input" class="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-50" aria-label="Confronto Produzione e Finito" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+                    </div>
+
+                    <div class="flex flex-wrap justify-center gap-4 mt-8 gsap-reveal">
+                        <button onclick="animateScanPos(100)" class="font-mono text-[10px] uppercase tracking-widest px-5 py-2.5 border border-white/20 text-text-tech hover:border-[#268988] hover:text-[#268988] transition-all rounded-sm" data-i18n="btn_scan_prod">[ 100% FASE DI PRODUZIONE ]</button>
+                        <button onclick="animateScanPos(50)" class="font-mono text-[10px] uppercase tracking-widest px-5 py-2.5 border border-[#268988] bg-[#268988]/10 text-[#268988] transition-all rounded-sm" data-i18n="btn_scan_50">[ 50 / 50 CONFRONTO LIVE ]</button>
+                        <button onclick="animateScanPos(0)" class="font-mono text-[10px] uppercase tracking-widest px-5 py-2.5 border border-white/20 text-text-tech hover:border-[#268988] hover:text-[#268988] transition-all rounded-sm" data-i18n="btn_scan_finished">[ 100% STAND FINITO ]</button>
+                    </div>
+                </div>
+
+                <div class="mt-24 relative gsap-reveal">
+                    <div class="hidden lg:block absolute left-1/2 top-[-48px] bottom-0 w-px bg-[#268988]/30 transform -translate-x-1/2"></div>
+                    <div class="text-center mb-12">
+                        <span class="font-mono text-xs text-[#268988] uppercase tracking-[0.2em] mb-4 block" data-i18n="anatomy_tag">[ 03 // ANATOMIA COSTRUTTIVA ]</span>
+                        <h3 class="font-display text-3xl lg:text-4xl font-bold text-white" data-i18n="anatomy_title">Fasi costruttive dello stand Sarandrea: 5 livelli ingegneristici</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-px bg-white/10 border border-white/10 rounded-sm overflow-hidden">
+                        <div class="bg-[#16191D] p-6 hover:bg-[#1e2227] transition-colors duration-300 group cursor-pointer" onmouseenter="triggerHotspot(1)" onmouseleave="clearHotspots()">
+                            <span class="font-mono text-xs text-[#268988] mb-4 block">01</span>
+                            <h4 class="font-display text-lg font-bold text-white mb-2 group-hover:text-[#268988] transition-colors" data-i18n="anatomy_1_title">Pedana & Struttura Base</h4>
+                            <span class="inline-block font-mono text-[9px] text-[#268988] border border-[#268988]/40 px-2 py-1 rounded-sm mb-3" data-i18n="anatomy_1_spec">MULTISTRATO BETULLA + PROFILO ALLUMINIO</span>
+                            <p class="font-body text-xs text-text-tech leading-relaxed" data-i18n="anatomy_1_desc">Dal piano di posa in pannelli di multistrato ad incastro con bordatura perimetrale in alluminio alla pedana finita bianco ottico pronta per l'apertura fiera.</p>
+                        </div>
+                        <div class="bg-[#16191D] p-6 hover:bg-[#1e2227] transition-colors duration-300 group cursor-pointer" onmouseenter="triggerHotspot(2)" onmouseleave="clearHotspots()">
+                            <span class="font-mono text-xs text-[#268988] mb-4 block">02</span>
+                            <h4 class="font-display text-lg font-bold text-white mb-2 group-hover:text-[#268988] transition-colors" data-i18n="anatomy_2_title">Involucro & Falegnameria</h4>
+                            <span class="inline-block font-mono text-[9px] text-[#268988] border border-[#268988]/40 px-2 py-1 rounded-sm mb-3" data-i18n="anatomy_2_spec">MDF GREZZO + MONTANTI ESTRUSI</span>
+                            <p class="font-body text-xs text-text-tech leading-relaxed" data-i18n="anatomy_2_desc">Dalle pannellature in MDF avvitate su struttura modulare in alluminio alle pareti monolitiche laccate bianco opaco con logo tridimensionale Sarandrea.</p>
+                        </div>
+                        <div class="bg-[#16191D] p-6 hover:bg-[#1e2227] transition-colors duration-300 group cursor-pointer" onmouseenter="triggerHotspot(3)" onmouseleave="clearHotspots()">
+                            <span class="font-mono text-xs text-[#268988] mb-4 block">03</span>
+                            <h4 class="font-display text-lg font-bold text-white mb-2 group-hover:text-[#268988] transition-colors" data-i18n="anatomy_3_title">Lightbox & Illuminotecnica</h4>
+                            <span class="inline-block font-mono text-[9px] text-[#268988] border border-[#268988]/40 px-2 py-1 rounded-sm mb-3" data-i18n="anatomy_3_spec">BARRE LED CRI>95 + TELO TENSIONATO</span>
+                            <p class="font-body text-xs text-text-tech leading-relaxed" data-i18n="anatomy_3_desc">Dalle file verticali di barre LED cablate a vista nella cavità in alluminio al cassonetto retroilluminato ad alta resa cromatica senza giunti.</p>
+                        </div>
+                        <div class="bg-[#16191D] p-6 hover:bg-[#1e2227] transition-colors duration-300 group cursor-pointer" onmouseenter="triggerHotspot(4)" onmouseleave="clearHotspots()">
+                            <span class="font-mono text-xs text-[#268988] mb-4 block">04</span>
+                            <h4 class="font-display text-lg font-bold text-white mb-2 group-hover:text-[#268988] transition-colors" data-i18n="anatomy_4_title">Maxi-Schermo LEDwall</h4>
+                            <span class="inline-block font-mono text-[9px] text-[#268988] border border-[#268988]/40 px-2 py-1 rounded-sm mb-3" data-i18n="anatomy_4_spec">TRALICCIO ACCIAIO + CABINET MODULARI</span>
+                            <p class="font-body text-xs text-text-tech leading-relaxed" data-i18n="anatomy_4_desc">Dalla griglia portante in acciaio nero con i primi moduli LED e cablaggi dati al grande schermo digitale incassato a filo parete.</p>
+                        </div>
+                        <div class="bg-[#16191D] p-6 hover:bg-[#1e2227] transition-colors duration-300 group cursor-pointer" onmouseenter="triggerHotspot(5)" onmouseleave="clearHotspots()">
+                            <span class="font-mono text-xs text-[#268988] mb-4 block">05</span>
+                            <h4 class="font-display text-lg font-bold text-white mb-2 group-hover:text-[#268988] transition-colors" data-i18n="anatomy_5_title">Reception & Arredi su Misura</h4>
+                            <span class="inline-block font-mono text-[9px] text-[#268988] border border-[#268988]/40 px-2 py-1 rounded-sm mb-3" data-i18n="anatomy_5_spec">SCOCCA FALEGNAMERIA + FASCIA LED</span>
+                            <p class="font-body text-xs text-text-tech leading-relaxed" data-i18n="anatomy_5_desc">Dalla scocca in falegnameria grezza con striscia LED inferiore al banco reception laccato con fascia luminosa, sgabelli coordinati e teche in vetro.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Interattivo & Lightbox -->
+        <section id="portfolio" class="py-24 bg-white">
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12">
+                <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-8 gsap-reveal">
+                    <div>
+                        <span class="font-mono text-xs text-primary uppercase tracking-[0.2em] mb-4 block" data-i18n="port_tag">[ 04 / PORTFOLIO ]</span>
+                        <h2 class="font-display text-4xl lg:text-5xl font-bold text-text-main" data-i18n="port_title">Progetti Realizzati</h2>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-2" id="portfolio-filters">
+                        <button class="filter-btn active font-mono text-xs uppercase tracking-widest px-4 py-2 border border-primary bg-primary text-white transition-all" data-filter="all" data-i18n="filter_all">Tutti [20]</button>
+                        <button class="filter-btn font-mono text-xs uppercase tracking-widest px-4 py-2 border border-gray-300 text-text-body hover:border-primary hover:text-primary transition-all" data-filter="medicale" data-i18n="filter_med">Medicale & Pharma</button>
+                        <button class="filter-btn font-mono text-xs uppercase tracking-widest px-4 py-2 border border-gray-300 text-text-body hover:border-primary hover:text-primary transition-all" data-filter="industria" data-i18n="filter_ind">Industria & Showroom</button>
+                        <button class="filter-btn font-mono text-xs uppercase tracking-widest px-4 py-2 border border-gray-300 text-text-body hover:border-primary hover:text-primary transition-all" data-filter="automotive" data-i18n="filter_auto">Automotive</button>
+                        <button class="filter-btn font-mono text-xs uppercase tracking-widest px-4 py-2 border border-gray-300 text-text-body hover:border-primary hover:text-primary transition-all" data-filter="fashion" data-i18n="filter_fash">Fashion & Luxury</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="portfolio-grid">
+                    <div class="portfolio-item group cursor-pointer" data-category="medicale" data-index="0">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="BD-04-300x200.jpg" alt="BD" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">BD</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Medicale ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="medicale" data-index="1">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="eLITECH-02-300x200.jpg" alt="eLITECH" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">eLITECH</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Medicale ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="medicale" data-index="2">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="EUROSPITAL-02-300x200.jpg" alt="EUROSPITAL" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">EUROSPITAL</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Medicale ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="medicale" data-index="3">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="RELAB-03-300x200.jpg" alt="RELAB" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">RELAB</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Medicale ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="medicale" data-index="4">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="BRUKER_1_AMCLI-300x200.jpg" alt="BRUKER" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">BRUKER</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Medicale ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="medicale" data-index="5">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="QIAGEN_AMCLI-300x200.jpg" alt="QIAGEN" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">QIAGEN</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Medicale ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="medicale" data-index="6">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="TECHDOW_CONGRESSI-300x200.jpg" alt="TECHDOW" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">TECHDOW</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Medicale ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="medicale" data-index="7">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="Merz-02-300x200.jpg" alt="Merz" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">Merz</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Medicale ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="industria" data-index="8">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="OMET-01-300x200.jpg" alt="OMET" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">OMET</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Industria ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="industria" data-index="9">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="OMET_SHOW_ROOM-300x200.jpg" alt="OMET Showroom" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">OMET Showroom</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Showroom ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="industria" data-index="10">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="LPM-02-300x200.jpg" alt="LPM" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">LPM</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Industria ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="industria" data-index="11">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="tuv-rhienland-02-300x200.jpg" alt="TÜV Rheinland" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">TÜV Rheinland</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Certificazioni ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="industria" data-index="12">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="ul-01-300x200.jpg" alt="UL" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">UL</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Certificazioni ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="automotive" data-index="13">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="MAD-Accessori-07-1-300x200.jpg" alt="MAD Accessori" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">MAD Accessori</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Automotive ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="automotive" data-index="14">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="TUV_RHEINLAND_EICMA-300x200.jpg" alt="TÜV Rheinland EICMA" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">TÜV Rheinland EICMA</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Mobility ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="fashion" data-index="15">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="SARANDREA-04-300x200.jpg" alt="Sarandrea" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">Sarandrea</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Luxury ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="fashion" data-index="16">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="ALEX-MAX-01-300x200.jpg" alt="Alex Max" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">Alex Max</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Fashion ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="fashion" data-index="17">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="ALESSIA-MASSIMO_HOMI_3-3-300x200.jpg" alt="Alessia & Massimo" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">Alessia & Massimo</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Editoria ]</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item group cursor-pointer" data-category="fashion" data-index="18">
+                        <div class="img-zoom-container aspect-[3/2] bg-gray-200 relative grid-line">
+                            <img src="GOLDEAN_HOUSE_FIERA_LIBRO-300x200.jpg" alt="Goldean House" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <span class="font-mono text-xs text-white uppercase tracking-widest border border-white px-4 py-2" data-i18n="port_view">Vedi Progetto</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-start">
+                            <h3 class="font-display text-lg font-bold text-text-main">Goldean House</h3>
+                            <span class="font-mono text-[10px] text-text-tech uppercase">[ Fiera Libro ]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULO 2: Configuratore Progetto a 3 Step -->
+        <section id="configurator" class="py-24 bg-light-alt">
+            <div class="max-w-4xl mx-auto px-6 lg:px-12">
+                <div class="text-center mb-12 gsap-reveal">
+                    <span class="font-mono text-xs text-primary uppercase tracking-[0.2em] mb-4 block" data-i18n="conf_tag">[ 05 / CONFIGURATORE ]</span>
+                    <h2 class="font-display text-4xl lg:text-5xl font-bold text-text-main" data-i18n="conf_title">Configura il tuo Progetto</h2>
+                </div>
+
+                <div class="mb-12 gsap-reveal">
+                    <div class="flex justify-between mb-4">
+                        <span class="font-mono text-xs text-primary font-bold" id="step-indicator-1">01 / CONFIGURAZIONE SPAZIO</span>
+                        <span class="font-mono text-xs text-text-tech" id="step-indicator-2">02 / DETTAGLI FIERA</span>
+                        <span class="font-mono text-xs text-text-tech" id="step-indicator-3">03 / RIEPILOGO & INVIO</span>
+                    </div>
+                    <div class="h-1 bg-gray-200 w-full rounded-full overflow-hidden">
+                        <div id="progress-bar" class="h-full bg-primary transition-all duration-500 ease-out" style="width: 33.33%"></div>
+                    </div>
+                </div>
+
+                <form id="config-form" class="gsap-reveal" onsubmit="return false;">
+                    <div id="step-1" class="step-content space-y-8">
+                        <div>
+                            <h3 class="font-display text-xl font-bold text-text-main mb-4" data-i18n="conf_step1_formula_title">Formula Progettuale</h3>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="formula" value="Stand su misura (Acquisto)" class="peer sr-only" onchange="updateConfig('formula', this.value)">
+                                    <div class="p-6 border border-gray-200 bg-white hover:border-primary peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-full flex flex-col">
+                                        <svg class="w-8 h-8 text-text-tech mb-3 peer-checked:text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                                        <span class="font-display font-bold text-text-main text-sm block mb-1" data-i18n="conf_f1">Stand su misura</span>
+                                        <span class="font-mono text-[10px] text-text-tech" data-i18n="conf_f1_desc">Progettazione esclusiva e produzione dedicata</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="formula" value="Noleggio chiavi in mano" class="peer sr-only" onchange="updateConfig('formula', this.value)">
+                                    <div class="p-6 border border-gray-200 bg-white hover:border-primary peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-full flex flex-col">
+                                        <svg class="w-8 h-8 text-text-tech mb-3 peer-checked:text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                                        <span class="font-display font-bold text-text-main text-sm block mb-1" data-i18n="conf_f2">Noleggio chiavi in mano</span>
+                                        <span class="font-mono text-[10px] text-text-tech" data-i18n="conf_f2_desc">Soluzione flessibile con struttura e logistica incluse</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="formula" value="Showroom & Spazi Corporate" class="peer sr-only" onchange="updateConfig('formula', this.value)">
+                                    <div class="p-6 border border-gray-200 bg-white hover:border-primary peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-full flex flex-col">
+                                        <svg class="w-8 h-8 text-text-tech mb-3 peer-checked:text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                        <span class="font-display font-bold text-text-main text-sm block mb-1" data-i18n="conf_f3">Showroom & Corporate</span>
+                                        <span class="font-mono text-[10px] text-text-tech" data-i18n="conf_f3_desc">Allestimenti permanenti, museali o eventi aziendali</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-display text-xl font-bold text-text-main mb-4" data-i18n="conf_step1_size_title">Metratura Stimata</h3>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="size" value="< 30 m²" class="peer sr-only" onchange="updateConfig('size', this.value)">
+                                    <div class="p-4 border border-gray-200 bg-white hover:border-primary peer-checked:border-primary peer-checked:bg-primary/5 transition-all text-center">
+                                        <span class="font-display font-bold text-text-main block" data-i18n="conf_s1">&lt; 30 m²</span>
+                                        <span class="font-mono text-[10px] text-text-tech" data-i18n="conf_s1_desc">Stand pre-allestito evoluto / Modulare</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="size" value="30 – 80 m²" class="peer sr-only" onchange="updateConfig('size', this.value)">
+                                    <div class="p-4 border border-gray-200 bg-white hover:border-primary peer-checked:border-primary peer-checked:bg-primary/5 transition-all text-center">
+                                        <span class="font-display font-bold text-text-main block" data-i18n="conf_s2">30 – 80 m²</span>
+                                        <span class="font-mono text-[10px] text-text-tech" data-i18n="conf_s2_desc">Stand angolare o penisola su misura</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="size" value="> 80 m²" class="peer sr-only" onchange="updateConfig('size', this.value)">
+                                    <div class="p-4 border border-gray-200 bg-white hover:border-primary peer-checked:border-primary peer-checked:bg-primary/5 transition-all text-center">
+                                        <span class="font-display font-bold text-text-main block" data-i18n="conf_s3">&gt; 80 m²</span>
+                                        <span class="font-mono text-[10px] text-text-tech" data-i18n="conf_s3_desc">Grande isola espositiva / Doppio piano</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="button" onclick="nextStep(2)" class="bg-primary text-white px-8 py-3 font-mono text-xs uppercase tracking-widest hover:bg-[#1f6e6d] transition-all flex items-center gap-2" data-i18n="btn_continue">
+                                Continua allo Step 2
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="step-2" class="step-content space-y-8 hidden">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="font-mono text-xs text-text-tech uppercase tracking-widest block mb-2" data-i18n="conf_fair_label">Nome Fiera / Evento e Città *</label>
+                                <input type="text" id="fair-input" class="w-full bg-white border border-gray-200 p-3 font-body text-text-main focus:border-primary focus:outline-none transition-colors" data-i18n-placeholder="conf_fair_ph" placeholder="es. MEDICA Düsseldorf" oninput="updateConfig('fair', this.value)">
+                            </div>
+                            <div>
+                                <label class="font-mono text-xs text-text-tech uppercase tracking-widest block mb-2" data-i18n="conf_period_label">Periodo previsto *</label>
+                                <input type="text" id="period-input" class="w-full bg-white border border-gray-200 p-3 font-body text-text-main focus:border-primary focus:outline-none transition-colors" data-i18n-placeholder="conf_period_ph" placeholder="es. Novembre 2026" oninput="updateConfig('period', this.value)">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="font-mono text-xs text-text-tech uppercase tracking-widest block mb-4" data-i18n="conf_amenities_label">Dotazioni & Servizi Integrati</label>
+                            <div class="flex flex-wrap gap-3">
+                                <button type="button" class="amenity-pill px-4 py-2 border border-gray-200 bg-white font-mono text-xs text-text-body uppercase tracking-widest hover:border-primary transition-all" onclick="toggleAmenity(this, 'Americane sospese & Lighting Design')" data-i18n="conf_am1">Americane sospese & Lighting</button>
+                                <button type="button" class="amenity-pill px-4 py-2 border border-gray-200 bg-white font-mono text-xs text-text-body uppercase tracking-widest hover:border-primary transition-all" onclick="toggleAmenity(this, 'LEDwall & Sistemi Multimediali')" data-i18n="conf_am2">LEDwall & Multimediali</button>
+                                <button type="button" class="amenity-pill px-4 py-2 border border-gray-200 bg-white font-mono text-xs text-text-body uppercase tracking-widest hover:border-primary transition-all" onclick="toggleAmenity(this, 'Area Hospitality & Magazzino riservato')" data-i18n="conf_am3">Hospitality & Magazzino</button>
+                                <button type="button" class="amenity-pill px-4 py-2 border border-gray-200 bg-white font-mono text-xs text-text-body uppercase tracking-widest hover:border-primary transition-all" onclick="toggleAmenity(this, 'Logistica, Dogana & Montaggio Internazionale')" data-i18n="conf_am4">Logistica & Montaggio Int.</button>
+                            </div>
+                        </div>
+                        <div class="flex justify-between">
+                            <button type="button" onclick="prevStep(1)" class="border border-text-main text-text-main px-8 py-3 font-mono text-xs uppercase tracking-widest hover:bg-text-main hover:text-white transition-all" data-i18n="btn_back">Indietro</button>
+                            <button type="button" onclick="nextStep(3)" class="bg-primary text-white px-8 py-3 font-mono text-xs uppercase tracking-widest hover:bg-[#1f6e6d] transition-all flex items-center gap-2" data-i18n="btn_continue">
+                                Continua allo Step 3
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="step-3" class="step-content space-y-8 hidden">
+                        <div class="bg-dark p-6 lg:p-8 grid-line-dark">
+                            <div class="flex justify-between items-start mb-6">
+                                <h3 class="font-display text-xl font-bold text-white" data-i18n="conf_summary_title">Scheda Tecnica Riepilogativa</h3>
+                                <button type="button" onclick="prevStep(2)" class="font-mono text-[10px] text-primary uppercase tracking-widest hover:underline" data-i18n="conf_summary_edit">Modifica scelte</button>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-6 font-mono text-xs text-text-tech">
+                                <div><span class="block text-white mb-1" data-i18n="conf_sum_formula">Formula:</span><span id="sum-formula" class="text-primary">-</span></div>
+                                <div><span class="block text-white mb-1" data-i18n="conf_sum_size">Metratura:</span><span id="sum-size" class="text-primary">-</span></div>
+                                <div><span class="block text-white mb-1" data-i18n="conf_sum_fair">Fiera / Città:</span><span id="sum-fair" class="text-primary">-</span></div>
+                                <div><span class="block text-white mb-1" data-i18n="conf_sum_period">Periodo:</span><span id="sum-period" class="text-primary">-</span></div>
+                                <div class="md:col-span-2"><span class="block text-white mb-1" data-i18n="conf_sum_amenities">Dotazioni:</span><span id="sum-amenities" class="text-primary">-</span></div>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="font-mono text-xs text-text-tech uppercase tracking-widest block mb-2" data-i18n="conf_name_label">Nome e Cognome *</label>
+                                <input type="text" id="name-input" class="w-full bg-white border border-gray-200 p-3 font-body text-text-main focus:border-primary focus:outline-none transition-colors" data-i18n-placeholder="conf_name_ph" placeholder="Mario Rossi" oninput="updateConfig('name', this.value)">
+                            </div>
+                            <div>
+                                <label class="font-mono text-xs text-text-tech uppercase tracking-widest block mb-2" data-i18n="conf_company_label">Azienda *</label>
+                                <input type="text" id="company-input" class="w-full bg-white border border-gray-200 p-3 font-body text-text-main focus:border-primary focus:outline-none transition-colors" data-i18n-placeholder="conf_company_ph" placeholder="Nome Azienda S.p.A." oninput="updateConfig('company', this.value)">
+                            </div>
+                            <div>
+                                <label class="font-mono text-xs text-text-tech uppercase tracking-widest block mb-2" data-i18n="conf_email_label">Email aziendale *</label>
+                                <input type="email" id="email-input" class="w-full bg-white border border-gray-200 p-3 font-body text-text-main focus:border-primary focus:outline-none transition-colors" data-i18n-placeholder="conf_email_ph" placeholder="mario@azienda.it" oninput="updateConfig('email', this.value)">
+                            </div>
+                            <div>
+                                <label class="font-mono text-xs text-text-tech uppercase tracking-widest block mb-2" data-i18n="conf_phone_label">Telefono *</label>
+                                <input type="tel" id="phone-input" class="w-full bg-white border border-gray-200 p-3 font-body text-text-main focus:border-primary focus:outline-none transition-colors" data-i18n-placeholder="conf_phone_ph" placeholder="+39 000 000 0000" oninput="updateConfig('phone', this.value)">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="font-mono text-xs text-text-tech uppercase tracking-widest block mb-2" data-i18n="conf_notes_label">Note aggiuntive sul progetto</label>
+                                <textarea id="notes-input" rows="3" class="w-full bg-white border border-gray-200 p-3 font-body text-text-main focus:border-primary focus:outline-none transition-colors" data-i18n-placeholder="conf_notes_ph" placeholder="Descrivi brevemente le tue esigenze..." oninput="updateConfig('notes', this.value)"></textarea>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="flex items-start gap-3 cursor-pointer">
+                                    <input type="checkbox" id="gdpr-input" class="mt-1 accent-primary" onchange="updateConfig('gdpr', this.checked)">
+                                    <span class="font-body text-sm text-text-body">
+                                        <span data-i18n="conf_gdpr_label">Acconsento al trattamento dei dati personali ai sensi del GDPR per essere ricontattato riguardo a questa richiesta. *</span>
+                                        <a href="#" onclick="openPrivacyModal(); return false;" class="text-primary hover:underline font-mono text-xs ml-1" data-i18n="conf_gdpr_link">Leggi l'informativa</a>
+                                    </span>
+                                </label>
+                                <p id="gdpr-error" class="font-mono text-[10px] text-red-500 mt-1 hidden" data-i18n="conf_gdpr_error">È necessario accettare per procedere.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center pt-4">
+                            <button type="button" onclick="prevStep(2)" class="border border-text-main text-text-main px-8 py-3 font-mono text-xs uppercase tracking-widest hover:bg-text-main hover:text-white transition-all" data-i18n="btn_back">Indietro</button>
+                            <button type="button" id="submit-btn" onclick="submitConfigurator()" class="bg-primary text-white px-8 py-3 font-mono text-xs uppercase tracking-widest hover:bg-[#1f6e6d] transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <span id="submit-text" data-i18n="btn_send">Invia Richiesta Progetto</span>
+                                <svg id="submit-spinner" class="hidden animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="step-success" class="hidden text-center py-12">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <h3 class="font-display text-3xl font-bold text-text-main mb-4" data-i18n="success_title">Richiesta Inviata con Successo</h3>
+                        <p class="font-body text-text-body mb-2" data-i18n="success_msg">Grazie per aver configurato il tuo progetto con Studio013. Il nostro team ti contatterà entro 24 ore.</p>
+                        <p class="font-mono text-sm text-primary mb-8" id="success-ref">RIF-013-2026-XXX</p>
+                        <button type="button" onclick="resetConfigurator()" class="bg-dark text-white px-8 py-3 font-mono text-xs uppercase tracking-widest hover:bg-dark-alt transition-all" data-i18n="btn_new">Configura un nuovo progetto</button>
+                    </div>
+
+                    <div id="step-error" class="hidden text-center py-12">
+                        <div class="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </div>
+                        <h3 class="font-display text-2xl font-bold text-text-main mb-4" data-i18n="error_title">Errore di Invio</h3>
+                        <p class="font-body text-text-body mb-8" data-i18n="error_msg">Si è verificato un problema di rete o la chiave API non è configurata. Riprova più tardi.</p>
+                        <button type="button" onclick="prevStep(3)" class="border border-text-main text-text-main px-8 py-3 font-mono text-xs uppercase tracking-widest hover:bg-text-main hover:text-white transition-all" data-i18n="btn_back">Torna indietro</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- FOOTER ARCHITETTONICO CON DATI REALI -->
+        <footer class="bg-dark text-white relative overflow-hidden" style="border-top: 1px solid rgba(255,255,255,0.12);">
+            <div class="absolute top-0 left-0 w-full h-full opacity-[0.025] pointer-events-none" style="background-image: linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px); background-size: 40px 40px;"></div>
+            
+            <div class="max-w-[1920px] mx-auto px-6 lg:px-12 py-20 relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 mb-16">
+                    <div class="gsap-reveal">
+                        <h3 class="font-display text-xl font-bold text-white mb-8 uppercase tracking-wide" data-i18n="footer_addr_title">Indirizzo</h3>
+                        <div class="flex items-start gap-5 mb-6">
+                            <div class="flex-shrink-0 border-2 border-primary p-2 bg-[#16191D]">
+                                <svg width="80" height="80" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-16 h-16">
+                                    <rect x="4" y="4" width="132" height="132" stroke="#268988" stroke-width="4"/>
+                                    <text x="70" y="60" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="22" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.1em">STUDIO</text>
+                                    <text x="70" y="115" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="56" fill="#999A9C" text-anchor="middle" letter-spacing="-0.02em">013</text>
+                                </svg>
+                            </div>
+                            <div class="font-body text-text-tech leading-relaxed">
+                                <p class="text-white mb-1">Via Giuseppe di Vittorio nr. 5 /</p>
+                                <p class="text-white">20 009 Vittuone (MI)</p>
+                            </div>
+                        </div>
+                        <div class="inline-flex items-center gap-2 border border-primary/40 bg-primary/5 px-3 py-1.5">
+                            <span class="font-mono text-[10px] text-primary uppercase tracking-widest" data-i18n="footer_vat_label">P.IVA</span>
+                            <span class="font-mono text-[10px] text-white tracking-widest">08149930961</span>
+                        </div>
+                    </div>
+
+                    <div class="gsap-reveal">
+                        <h3 class="font-display text-xl font-bold text-white mb-8 uppercase tracking-wide" data-i18n="footer_menu_title">Menu</h3>
+                        <ul class="space-y-4">
+                            <li>
+                                <a href="#top" class="group flex items-center gap-3 font-body text-text-tech hover:text-primary transition-colors duration-300">
+                                    <span class="text-primary font-mono text-sm group-hover:translate-x-1 transition-transform duration-300">›</span>
+                                    <span data-i18n="footer_menu_1">Studio 013 - Tutto il mondo delle Fiere</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="openPrivacyModal(); return false;" class="group flex items-center gap-3 font-body text-text-tech hover:text-primary transition-colors duration-300">
+                                    <span class="text-primary font-mono text-sm group-hover:translate-x-1 transition-transform duration-300">›</span>
+                                    <span data-i18n="footer_menu_2">Privacy Policy & Cookie Policy</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="gsap-reveal">
+                        <h3 class="font-display text-xl font-bold text-white mb-8 uppercase tracking-wide" data-i18n="footer_contacts_title">Contatti</h3>
+                        <div class="space-y-3">
+                            <a href="tel:+393921138600" class="block font-mono text-sm text-text-tech hover:text-primary transition-colors duration-300 tracking-wider">cell. +39 392.11.38.600</a>
+                            <a href="tel:+393474152193" class="block font-mono text-sm text-text-tech hover:text-primary transition-colors duration-300 tracking-wider">cell. +39 347.415.21.93</a>
+                            <div class="pt-3">
+                                <span class="block font-body text-sm text-white mb-2" data-i18n="footer_email_label">Email:</span>
+                                <a href="mailto:info@studio013.it" class="block font-mono text-sm text-text-tech hover:text-primary transition-colors duration-300 tracking-wider mb-1">info@studio013.it</a>
+                                <a href="mailto:blaskovic@studio013.it" class="block font-mono text-sm text-text-tech hover:text-primary transition-colors duration-300 tracking-wider">blaskovic@studio013.it</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <span class="font-body text-xs text-text-tech" data-i18n="footer_copy">© Copyright 2026 Studio013. Tutti i diritti riservati.</span>
+                    <span class="font-mono text-[10px] text-primary uppercase tracking-widest">45°29'N 8°57'E // VITTUONE - MILANO</span>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Lightbox Full-Screen -->
+    <div id="lightbox" class="fixed inset-0 z-[60] hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <button id="lightbox-close" class="absolute top-6 right-6 text-white hover:text-primary transition-colors z-50">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <button id="lightbox-prev" class="absolute left-4 lg:left-12 text-white hover:text-primary transition-colors z-50 p-2">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+        <button id="lightbox-next" class="absolute right-4 lg:right-12 text-white hover:text-primary transition-colors z-50 p-2">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+        
+        <div class="max-w-6xl w-full px-6 flex flex-col items-center">
+            <img id="lightbox-img" src="" alt="" class="max-h-[75vh] w-auto object-contain shadow-2xl">
+            <div class="mt-6 text-center">
+                <h3 id="lightbox-title" class="font-display text-2xl font-bold text-white"></h3>
+                <span id="lightbox-category" class="font-mono text-xs text-primary uppercase tracking-widest mt-2 block"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALE PRIVACY & COOKIE POLICY -->
+    <div id="privacy-modal" class="fixed inset-0 z-[70] hidden flex items-center justify-center opacity-0 transition-opacity duration-300 p-4">
+        <button id="privacy-close" class="absolute top-6 right-6 text-white hover:text-primary transition-colors z-50">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div class="max-w-3xl w-full bg-[#16191D] border border-white/15 rounded-sm shadow-2xl max-h-[90vh] flex flex-col">
+            <div class="p-6 lg:p-8 border-b border-white/10 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <svg width="60" height="60" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10">
+                        <rect x="4" y="4" width="132" height="132" stroke="#268988" stroke-width="4"/>
+                        <text x="70" y="60" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="22" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.1em">STUDIO</text>
+                        <text x="70" y="115" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="56" fill="#999A9C" text-anchor="middle" letter-spacing="-0.02em">013</text>
+                    </svg>
+                    <div>
+                        <span class="font-mono text-[10px] text-primary uppercase tracking-widest block" data-i18n="privacy_tag">[ GDPR // INFORMATIVA ]</span>
+                        <h3 class="font-display text-2xl font-bold text-white" data-i18n="privacy_title">Privacy Policy & Cookie Policy</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body p-6 lg:p-8 overflow-y-auto font-body text-sm text-text-tech leading-relaxed space-y-6">
+                <div class="border border-primary/30 bg-primary/5 p-4 rounded-sm">
+                    <p class="font-mono text-[10px] text-primary uppercase tracking-widest mb-2" data-i18n="privacy_owner_label">Titolare del Trattamento</p>
+                    <p class="text-white font-display text-base">Studio013 — Via Giuseppe di Vittorio nr. 5, 20009 Vittuone (MI)</p>
+                    <p class="font-mono text-xs text-text-tech mt-1">P.IVA 08149930961 — info@studio013.it</p>
+                </div>
+
+                <div>
+                    <h4 class="font-display text-lg font-bold text-white mb-3" data-i18n="privacy_h1">1. Dati personali raccolti</h4>
+                    <p data-i18n="privacy_p1">Il sito Studio013 raccoglie esclusivamente i dati che l'utente fornisce volontariamente tramite il Configuratore Progetto (nome, azienda, email, telefono, note) e i dati di navigazione tecnici (indirizzo IP, tipo di browser, sistema operativo) necessari per la corretta visualizzazione delle pagine e per finalità statistiche aggregate.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-display text-lg font-bold text-white mb-3" data-i18n="privacy_h2">2. Finalità e base giuridica del trattamento</h4>
+                    <p data-i18n="privacy_p2">I dati vengono trattati per: (a) rispondere alle richieste di preventivo e consulenza tecnica (base giuridica: esecuzione di misure precontrattuali, art. 6.1.b GDPR); (b) adempiere agli obblighi di legge in materia fiscale e contabile (art. 6.1.c GDPR); (c) migliorare l'esperienza di navigazione tramite cookie tecnici (art. 6.1.f GDPR, legittimo interesse).</p>
+                </div>
+
+                <div>
+                    <h4 class="font-display text-lg font-bold text-white mb-3" data-i18n="privacy_h3">3. Cookie tecnici e analitici</h4>
+                    <p data-i18n="privacy_p3">Questo sito utilizza cookie tecnici necessari al funzionamento (sessione, preferenze lingua IT/EN/HR, consenso banner) e cookie analitici in forma aggregata per monitorare le performance. Nessun cookie di profilazione commerciale viene installato senza consenso esplicito dell'utente tramite il pannello "Gestisci preferenze".</p>
+                </div>
+
+                <div>
+                    <h4 class="font-display text-lg font-bold text-white mb-3" data-i18n="privacy_h4">4. Conservazione e comunicazione dei dati</h4>
+                    <p data-i18n="privacy_p4">I dati inviati tramite il Configuratore vengono trasmessi via Web3Forms (servizio esterno conforme GDPR) e conservati per il tempo necessario all'evasione della richiesta, e comunque non oltre 24 mesi. I dati non vengono ceduti a terzi per finalità commerciali.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-display text-lg font-bold text-white mb-3" data-i18n="privacy_h5">5. Diritti dell'interessato</h4>
+                    <p data-i18n="privacy_p5">In qualsiasi momento l'utente può esercitare i diritti di accesso, rettifica, cancellazione, limitazione, portabilità e opposizione (artt. 15-22 GDPR) scrivendo a info@studio013.it oppure inviando una comunicazione presso la sede legale in Via Giuseppe di Vittorio nr. 5, 20009 Vittuone (MI). Ha inoltre diritto di proporre reclamo al Garante per la Protezione dei Dati Personali.</p>
+                </div>
+
+                <div class="pt-4 border-t border-white/10">
+                    <p class="font-mono text-[10px] text-text-tech uppercase tracking-widest" data-i18n="privacy_updated">Ultimo aggiornamento: Gennaio 2026 — Rev. 013/PRV/2026</p>
+                </div>
+            </div>
+            <div class="p-6 lg:p-8 border-t border-white/10 flex justify-end gap-4">
+                <button onclick="closePrivacyModal()" class="bg-primary text-white px-8 py-3 font-mono text-xs uppercase tracking-widest hover:bg-[#1f6e6d] transition-all" data-i18n="privacy_close">Ho compreso e chiudo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie & Privacy Banner -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full z-50 bg-dark-alt border-t border-white/10 p-6 transform translate-y-full transition-transform duration-500">
+        <div class="max-w-[1920px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-6">
+            <div class="flex-1">
+                <p class="font-body text-sm text-text-tech leading-relaxed">
+                    <span data-i18n="cookie_text">Utilizziamo cookie tecnici e di profilazione per migliorare la tua esperienza di navigazione e analizzare il traffico del sito. Continuando la navigazione o cliccando su "Accetta", acconsenti all'uso dei cookie come descritto nella nostra </span>
+                    <a href="#" onclick="openPrivacyModal(); return false;" class="text-primary hover:underline" data-i18n="footer_menu_2_short">Privacy & Cookie Policy</a>.
+                </p>
+            </div>
+            <div class="flex gap-4 flex-shrink-0">
+                <button id="cookie-manage" class="font-mono text-xs uppercase tracking-widest text-text-tech hover:text-white transition-colors px-4 py-2" onclick="openPrivacyModal()" data-i18n="cookie_manage">Gestisci</button>
+                <button id="cookie-accept" class="font-mono text-xs uppercase tracking-widest text-white bg-primary px-6 py-3 hover:bg-[#1f6e6d] transition-colors" data-i18n="cookie_accept">Accetta Tutti</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // ==========================================
+        // MOTORE TRILINGUE ISTANTANEO IT | EN | HR
+        // ==========================================
+        const I18N_DICTIONARY = {
+            it: {
+                nav_home: "Home", nav_studio: "Studio013", nav_projects: "Progetti", nav_contacts: "Contatti", cta_nav: "Richiedi un progetto",
+                hero_tag: "[ 00 / HOME ]", hero_title: "Tutto il mondo <br><span class='text-primary'>delle fiere.</span>", hero_subtitle: "Le fiere sono eventi sempre più importanti per le aziende. Il modo di presentare ed esporre i prodotti ha un’importanza cruciale: l’azienda è il suo prodotto.", hero_cta_explore: "Esplora i progetti", hero_cta_request: "Richiedi un progetto",
+                method_tag: "[ 01 / METODO ]", method_title: "Efficienza e professionalità.", method_c1_title: "Azienda Giovane e Dinamica", method_c1_desc: "Studio 013 si presenta come azienda giovane e dinamica. Efficienza e professionalità sono i concetti base su cui fondiamo il ns. lavoro.", method_c2_title: "Esperienza Ventennale", method_c2_desc: "La società con personale di esperienza ventennale vi offre un servizio di collaborazione per predisporre allestimenti completi e di alta qualità.", method_c3_title: "Copertura a 360 Gradi", method_c3_desc: "Siamo in grado di soddisfare ogni tipo di richiesta: dal noleggio alla vendita, alla grafica, al multimedia.", method_c4_tag: "[ 04 / SICUREZZA ]", method_c4_title: "Certificazioni e Sicurezza Totale", method_c4_desc: "I materiali forniti per l’allestimento sono accompagnati da certificazioni di legge, dichiarazioni di conformità, calcoli statici di resistenza e vengono installati a regola d’arte per garantirne la totale sicurezza.",
+                scanner_tag: "[ 02 // VERIFICA INGEGNERISTICA & COSTRUZIONE ]", scanner_title: "Dalla precisione del render 3D alla realtà costruttiva in fiera.", scanner_subtitle: "Fedeltà assoluta tra progetto esecutivo e realizzazione chiavi in mano. Ogni dettaglio è ingegnerizzato per garantire impatto scenografico, sicurezza strutturale e perfetta corrispondenza con il concept approvato.",
+                scan_label_cad: "[ 01 // PRODUZIONE & MONTAGGIO ]", scan_label_real: "[ 02 // STAND FINITO CHIAVI IN MANO ]",
+                cad_quote_1: "QUOTA ALZATO: +4.500 mm", cad_quote_2: "SUPERFICIE: 48 m²",
+                btn_scan_prod: "[ 100% FASE DI PRODUZIONE ]", btn_scan_50: "[ 50 / 50 CONFRONTO LIVE ]", btn_scan_finished: "[ 100% STAND FINITO ]",
+                scan_telemetry: "SCAN: {pos}% | CANTIERE ◄ ► FINITO",
+                anatomy_tag: "[ 03 // ANATOMIA COSTRUTTIVA ]", anatomy_title: "Fasi costruttive dello stand Sarandrea: 5 livelli ingegneristici",
+                anatomy_1_title: "Pedana & Struttura Base", anatomy_1_spec: "MULTISTRATO BETULLA + PROFILO ALLUMINIO", anatomy_1_desc: "Dal piano di posa in pannelli di multistrato ad incastro con bordatura perimetrale in alluminio alla pedana finita bianco ottico pronta per l'apertura fiera.",
+                anatomy_2_title: "Involucro & Falegnameria", anatomy_2_spec: "MDF GREZZO + MONTANTI ESTRUSI", anatomy_2_desc: "Dalle pannellature in MDF avvitate su struttura modulare in alluminio alle pareti monolitiche laccate bianco opaco con logo tridimensionale Sarandrea.",
+                anatomy_3_title: "Lightbox & Illuminotecnica", anatomy_3_spec: "BARRE LED CRI>95 + TELO TENSIONATO", anatomy_3_desc: "Dalle file verticali di barre LED cablate a vista nella cavità in alluminio al cassonetto retroilluminato ad alta resa cromatica senza giunti.",
+                anatomy_4_title: "Maxi-Schermo LEDwall", anatomy_4_spec: "TRALICCIO ACCIAIO + CABINET MODULARI", anatomy_4_desc: "Dalla griglia portante in acciaio nero con i primi moduli LED e cablaggi dati al grande schermo digitale incassato a filo parete.",
+                anatomy_5_title: "Reception & Arredi su Misura", anatomy_5_spec: "SCOCCA FALEGNAMERIA + FASCIA LED", anatomy_5_desc: "Dalla scocca in falegnameria grezza con striscia LED inferiore al banco reception laccato con fascia luminosa, sgabelli coordinati e teche in vetro.",
+                port_tag: "[ 04 / PORTFOLIO ]", port_title: "Progetti Realizzati", filter_all: "Tutti [20]", filter_med: "Medicale & Pharma", filter_ind: "Industria & Showroom", filter_auto: "Automotive", filter_fash: "Fashion & Luxury", port_view: "Vedi Progetto",
+                conf_tag: "[ 05 / CONFIGURATORE ]", conf_title: "Configura il tuo Progetto", conf_step1_formula_title: "Formula Progettuale", conf_f1: "Stand su misura", conf_f1_desc: "Progettazione esclusiva e produzione dedicata", conf_f2: "Noleggio chiavi in mano", conf_f2_desc: "Soluzione flessibile con struttura e logistica incluse", conf_f3: "Showroom & Corporate", conf_f3_desc: "Allestimenti permanenti, museali o eventi aziendali", conf_step1_size_title: "Metratura Stimata", conf_s1: "< 30 m²", conf_s1_desc: "Stand pre-allestito evoluto / Modulare", conf_s2: "30 – 80 m²", conf_s2_desc: "Stand angolare o penisola su misura", conf_s3: "> 80 m²", conf_s3_desc: "Grande isola espositiva / Doppio piano", btn_continue: "Continua allo Step 2",
+                conf_fair_label: "Nome Fiera / Evento e Città *", conf_fair_ph: "es. MEDICA Düsseldorf", conf_period_label: "Periodo previsto *", conf_period_ph: "es. Novembre 2026", conf_amenities_label: "Dotazioni & Servizi Integrati", conf_am1: "Americane sospese & Lighting", conf_am2: "LEDwall & Multimediali", conf_am3: "Hospitality & Magazzino", conf_am4: "Logistica & Montaggio Int.", btn_back: "Indietro",
+                conf_summary_title: "Scheda Tecnica Riepilogativa", conf_summary_edit: "Modifica scelte", conf_sum_formula: "Formula:", conf_sum_size: "Metratura:", conf_sum_fair: "Fiera / Città:", conf_sum_period: "Periodo:", conf_sum_amenities: "Dotazioni:", conf_name_label: "Nome e Cognome *", conf_name_ph: "Mario Rossi", conf_company_label: "Azienda *", conf_company_ph: "Nome Azienda S.p.A.", conf_email_label: "Email aziendale *", conf_email_ph: "mario@azienda.it", conf_phone_label: "Telefono *", conf_phone_ph: "+39 000 000 0000", conf_notes_label: "Note aggiuntive sul progetto", conf_notes_ph: "Descrivi brevemente le tue esigenze...", conf_gdpr_label: "Acconsento al trattamento dei dati personali ai sensi del GDPR per essere ricontattato riguardo a questa richiesta. *", conf_gdpr_link: "Leggi l'informativa", conf_gdpr_error: "È necessario accettare per procedere.", btn_send: "Invia Richiesta Progetto",
+                success_title: "Richiesta Inviata con Successo", success_msg: "Grazie per aver configurato il tuo progetto con Studio013. Il nostro team ti contatterà entro 24 ore.", btn_new: "Configura un nuovo progetto", error_title: "Errore di Invio", error_msg: "Si è verificato un problema di rete o la chiave API non è configurata. Riprova più tardi.",
+                footer_addr_title: "Indirizzo", footer_menu_title: "Menu", footer_contacts_title: "Contatti", footer_vat_label: "P.IVA", footer_email_label: "Email:",
+                footer_menu_1: "Studio 013 - Tutto il mondo delle Fiere", footer_menu_2: "Privacy Policy & Cookie Policy", footer_menu_2_short: "Privacy & Cookie Policy",
+                footer_copy: "© Copyright 2026 Studio013. Tutti i diritti riservati.",
+                privacy_tag: "[ GDPR // INFORMATIVA ]", privacy_title: "Privacy Policy & Cookie Policy", privacy_owner_label: "Titolare del Trattamento",
+                privacy_h1: "1. Dati personali raccolti", privacy_p1: "Il sito Studio013 raccoglie esclusivamente i dati che l'utente fornisce volontariamente tramite il Configuratore Progetto (nome, azienda, email, telefono, note) e i dati di navigazione tecnici (indirizzo IP, tipo di browser, sistema operativo) necessari per la corretta visualizzazione delle pagine e per finalità statistiche aggregate.",
+                privacy_h2: "2. Finalità e base giuridica del trattamento", privacy_p2: "I dati vengono trattati per: (a) rispondere alle richieste di preventivo e consulenza tecnica (base giuridica: esecuzione di misure precontrattuali, art. 6.1.b GDPR); (b) adempiere agli obblighi di legge in materia fiscale e contabile (art. 6.1.c GDPR); (c) migliorare l'esperienza di navigazione tramite cookie tecnici (art. 6.1.f GDPR, legittimo interesse).",
+                privacy_h3: "3. Cookie tecnici e analitici", privacy_p3: "Questo sito utilizza cookie tecnici necessari al funzionamento (sessione, preferenze lingua IT/EN/HR, consenso banner) e cookie analitici in forma aggregata per monitorare le performance. Nessun cookie di profilazione commerciale viene installato senza consenso esplicito dell'utente tramite il pannello \"Gestisci preferenze\".",
+                privacy_h4: "4. Conservazione e comunicazione dei dati", privacy_p4: "I dati inviati tramite il Configuratore vengono trasmessi via Web3Forms (servizio esterno conforme GDPR) e conservati per il tempo necessario all'evasione della richiesta, e comunque non oltre 24 mesi. I dati non vengono ceduti a terzi per finalità commerciali.",
+                privacy_h5: "5. Diritti dell'interessato", privacy_p5: "In qualsiasi momento l'utente può esercitare i diritti di accesso, rettifica, cancellazione, limitazione, portabilità e opposizione (artt. 15-22 GDPR) scrivendo a info@studio013.it oppure inviando una comunicazione presso la sede legale in Via Giuseppe di Vittorio nr. 5, 20009 Vittuone (MI). Ha inoltre diritto di proporre reclamo al Garante per la Protezione dei Dati Personali.",
+                privacy_updated: "Ultimo aggiornamento: Gennaio 2026 — Rev. 013/PRV/2026", privacy_close: "Ho compreso e chiudo",
+                cookie_text: "Utilizziamo cookie tecnici e di profilazione per migliorare la tua esperienza di navigazione e analizzare il traffico del sito. Continuando la navigazione o cliccando su \"Accetta\", acconsenti all'uso dei cookie come descritto nella nostra ", cookie_manage: "Gestisci", cookie_accept: "Accetta Tutti"
+            },
+            en: {
+                nav_home: "Home", nav_studio: "Studio013", nav_projects: "Projects", nav_contacts: "Contacts", cta_nav: "Request a project",
+                hero_tag: "[ 00 / HOME ]", hero_title: "The entire world <br><span class='text-primary'>of trade fairs.</span>", hero_subtitle: "Trade fairs are increasingly important events for companies. The way products are presented and displayed is crucial: the company is its product.", hero_cta_explore: "Explore projects", hero_cta_request: "Request a project",
+                method_tag: "[ 01 / METHOD ]", method_title: "Efficiency and professionalism.", method_c1_title: "Young and Dynamic Company", method_c1_desc: "Studio 013 presents itself as a young and dynamic company. Efficiency and professionalism are the basic concepts on which we base our work.", method_c2_title: "Twenty Years of Experience", method_c2_desc: "The company, with twenty years of experienced staff, offers a collaboration service to prepare complete and high-quality setups.", method_c3_title: "360-Degree Coverage", method_c3_desc: "We are able to satisfy every type of request: from rental to sales, graphics, and multimedia.", method_c4_tag: "[ 04 / SAFETY ]", method_c4_title: "Certifications and Total Safety", method_c4_desc: "The materials provided for the setup are accompanied by legal certifications, declarations of conformity, static resistance calculations, and are installed according to the rules of art to guarantee total safety.",
+                scanner_tag: "[ 02 // ENGINEERING & CONSTRUCTION CHECK ]", scanner_title: "From 3D render precision to real fair construction.", scanner_subtitle: "Absolute fidelity between the executive project and turnkey realization. Every detail is engineered to guarantee scenic impact, structural safety, and perfect correspondence with the approved concept.",
+                scan_label_cad: "[ 01 // PRODUCTION & ASSEMBLY ]", scan_label_real: "[ 02 // TURNKEY FINISHED STAND ]",
+                cad_quote_1: "ELEVATION QUOTA: +4,500 mm", cad_quote_2: "AREA: 48 m²",
+                btn_scan_prod: "[ 100% PRODUCTION PHASE ]", btn_scan_50: "[ 50 / 50 LIVE COMPARISON ]", btn_scan_finished: "[ 100% FINISHED STAND ]",
+                scan_telemetry: "SCAN: {pos}% | RAW BUILD ◄ ► FINISHED",
+                anatomy_tag: "[ 03 // CONSTRUCTIVE ANATOMY ]", anatomy_title: "Sarandrea stand construction phases: 5 engineering levels",
+                anatomy_1_title: "Flooring & Base Structure", anatomy_1_spec: "BIRCH PLYWOOD + ALUMINUM PROFILE", anatomy_1_desc: "From interlocking plywood flooring panels with aluminum edge banding to the finished optical white platform ready for the fair opening.",
+                anatomy_2_title: "Enclosure & Carpentry", anatomy_2_spec: "RAW MDF + EXTRUDED UPRIGHTS", anatomy_2_desc: "From MDF panels screwed onto modular aluminum structures to monolithic matte white lacquered walls with 3D Sarandrea logo.",
+                anatomy_3_title: "Lightbox & Lighting Design", anatomy_3_spec: "LED BARS CRI>95 + TENSIONED FABRIC", anatomy_3_desc: "From vertical rows of wired LED bars visible in the aluminum cavity to the high color rendering backlit box without joints.",
+                anatomy_4_title: "Large LEDwall Screen", anatomy_4_spec: "STEEL TRUSS + MODULAR CABINETS", anatomy_4_desc: "From the black steel load-bearing grid with first LED modules and data cabling to the large digital screen flush-mounted into the wall.",
+                anatomy_5_title: "Reception & Custom Furniture", anatomy_5_spec: "CARPENTRY SHELL + LED STRIP", anatomy_5_desc: "From the raw carpentry shell with lower LED strip to the lacquered reception desk with light strip, coordinated stools, and glass display cases.",
+                port_tag: "[ 04 / PORTFOLIO ]", port_title: "Completed Projects", filter_all: "All [20]", filter_med: "Medical & Pharma", filter_ind: "Industry & Showroom", filter_auto: "Automotive", filter_fash: "Fashion & Luxury", port_view: "View Project",
+                conf_tag: "[ 05 / CONFIGURATOR ]", conf_title: "Configure your Project", conf_step1_formula_title: "Design Formula", conf_f1: "Custom Stand", conf_f1_desc: "Exclusive design and dedicated production", conf_f2: "Turnkey Rental", conf_f2_desc: "Flexible solution with structure and logistics included", conf_f3: "Showroom & Corporate", conf_f3_desc: "Permanent, museum, or corporate event setups", conf_step1_size_title: "Estimated Area", conf_s1: "< 30 m²", conf_s1_desc: "Evolved pre-fitted / Modular stand", conf_s2: "30 – 80 m²", conf_s2_desc: "Corner or peninsula custom stand", conf_s3: "> 80 m²", conf_s3_desc: "Large exhibition island / Double deck", btn_continue: "Continue to Step 2",
+                conf_fair_label: "Fair / Event Name and City *", conf_fair_ph: "e.g., MEDICA Düsseldorf", conf_period_label: "Expected Period *", conf_period_ph: "e.g., November 2026", conf_amenities_label: "Integrated Equipment & Services", conf_am1: "Suspended Americans & Lighting", conf_am2: "LEDwall & Multimedia", conf_am3: "Hospitality & Private Storage", conf_am4: "Logistics & Int. Assembly", btn_back: "Back",
+                conf_summary_title: "Summary Technical Sheet", conf_summary_edit: "Edit choices", conf_sum_formula: "Formula:", conf_sum_size: "Area:", conf_sum_fair: "Fair / City:", conf_sum_period: "Period:", conf_sum_amenities: "Equipment:", conf_name_label: "First and Last Name *", conf_name_ph: "John Doe", conf_company_label: "Company *", conf_company_ph: "Company Name Inc.", conf_email_label: "Business Email *", conf_email_ph: "john@company.com", conf_phone_label: "Phone *", conf_phone_ph: "+1 000 000 0000", conf_notes_label: "Additional project notes", conf_notes_ph: "Briefly describe your needs...", conf_gdpr_label: "I consent to the processing of my personal data under GDPR to be contacted regarding this request. *", conf_gdpr_link: "Read the policy", conf_gdpr_error: "Acceptance is required to proceed.", btn_send: "Send Project Request",
+                success_title: "Request Sent Successfully", success_msg: "Thank you for configuring your project with Studio013. Our team will contact you within 24 hours.", btn_new: "Configure a new project", error_title: "Submission Error", error_msg: "A network error occurred or the API key is not configured. Please try again later.",
+                footer_addr_title: "Address", footer_menu_title: "Menu", footer_contacts_title: "Contacts", footer_vat_label: "VAT ID", footer_email_label: "Email:",
+                footer_menu_1: "Studio 013 - The whole world of Trade Shows", footer_menu_2: "Privacy Policy & Cookie Policy", footer_menu_2_short: "Privacy & Cookie Policy",
+                footer_copy: "© Copyright 2026 Studio013. All rights reserved.",
+                privacy_tag: "[ GDPR // POLICY ]", privacy_title: "Privacy Policy & Cookie Policy", privacy_owner_label: "Data Controller",
+                privacy_h1: "1. Personal data collected", privacy_p1: "The Studio013 website collects only the data that users voluntarily provide through the Project Configurator (name, company, email, phone, notes) and technical navigation data (IP address, browser type, operating system) necessary for correct page display and aggregated statistical purposes.",
+                privacy_h2: "2. Purpose and legal basis of processing", privacy_p2: "Data is processed for: (a) responding to quote and technical consulting requests (legal basis: performance of pre-contractual measures, art. 6.1.b GDPR); (b) complying with legal obligations in tax and accounting matters (art. 6.1.c GDPR); (c) improving the browsing experience through technical cookies (art. 6.1.f GDPR, legitimate interest).",
+                privacy_h3: "3. Technical and analytical cookies", privacy_p3: "This site uses technical cookies necessary for operation (session, IT/EN/HR language preferences, banner consent) and aggregated analytical cookies to monitor performance. No commercial profiling cookies are installed without the user's explicit consent through the \"Manage preferences\" panel.",
+                privacy_h4: "4. Data retention and communication", privacy_p4: "Data submitted through the Configurator is transmitted via Web3Forms (GDPR-compliant external service) and retained for the time necessary to process the request, and in any case no longer than 24 months. Data is not shared with third parties for commercial purposes.",
+                privacy_h5: "5. Data subject rights", privacy_p5: "At any time the user may exercise the rights of access, rectification, erasure, restriction, portability, and objection (arts. 15-22 GDPR) by writing to info@studio013.it or sending a communication to the registered office at Via Giuseppe di Vittorio nr. 5, 20009 Vittuone (MI). They also have the right to lodge a complaint with the Italian Data Protection Authority.",
+                privacy_updated: "Last update: January 2026 — Rev. 013/PRV/2026", privacy_close: "I understand and close",
+                cookie_text: "We use technical and profiling cookies to improve your browsing experience and analyze site traffic. By continuing to browse or clicking \"Accept\", you consent to the use of cookies as described in our ", cookie_manage: "Manage", cookie_accept: "Accept All"
+            },
+            hr: {
+                nav_home: "Početna", nav_studio: "Studio013", nav_projects: "Projekti", nav_contacts: "Kontakt", cta_nav: "Zatraži projekt",
+                hero_tag: "[ 00 / POČETNA ]", hero_title: "Cijeli svijet <br><span class='text-primary'>sajmova.</span>", hero_subtitle: "Sajmovi su sve važniji događaji za tvrtke. Način prezentacije i izlaganja proizvoda ključan je: tvrtka je njezin proizvod.", hero_cta_explore: "Istraži projekte", hero_cta_request: "Zatraži projekt",
+                method_tag: "[ 01 / METODA ]", method_title: "Učinkovitost i profesionalnost.", method_c1_title: "Mlada i dinamična tvrtka", method_c1_desc: "Studio 013 predstavlja se kao mlada i dinamična tvrtka. Učinkovitost i profesionalnost temeljni su koncepti na kojima gradimo naš rad.", method_c2_title: "Dvadeset godina iskustva", method_c2_desc: "Tvrtka s dvadesetogodišnjim iskustvom osoblja nudi suradnju za pripremu kompletnih postava visoke kvalitete.", method_c3_title: "Pokrivenost od 360 stupnjeva", method_c3_desc: "Sposobni smo zadovoljiti svaku vrstu zahtjeva: od najma do prodaje, grafike i multimedije.", method_c4_tag: "[ 04 / SIGURNOST ]", method_c4_title: "Certifikati i potpuna sigurnost", method_c4_desc: "Materijali isporučeni za postavu popraćeni su zakonskim certifikatima, izjavama o sukladnosti, statičkim proračunima otpornosti i ugrađeni su prema pravilima struke kako bi se zajamčila potpuna sigurnost.",
+                scanner_tag: "[ 02 // INŽENJERSKA I GRAĐEVINSKA PROVJERA ]", scanner_title: "Od preciznosti 3D rendera do stvarne sajamske izgradnje.", scanner_subtitle: "Apsolutna vjernost između izvršnog projekta i realizacije ključ u ruke. Svaki detalj je inženjerski osmišljen kako bi se zajamčio scenski učinak, strukturna sigurnost i savršena podudarnost s odobrenim konceptom.",
+                scan_label_cad: "[ 01 // PROIZVODNJA I MONTAŽA ]", scan_label_real: "[ 02 // GOTOV ŠTAND KLJUČ U RUKE ]",
+                cad_quote_1: "KOTA VISINE: +4.500 mm", cad_quote_2: "POVRŠINA: 48 m²",
+                btn_scan_prod: "[ 100% FAZA PROIZVODNJE ]", btn_scan_50: "[ 50 / 50 USPOREDBA UŽIVO ]", btn_scan_finished: "[ 100% GOTOV ŠTAND ]",
+                scan_telemetry: "SCAN: {pos}% | GRADNJA ◄ ► GOTOVO",
+                anatomy_tag: "[ 03 // KONSTRUKTIVNA ANATOMIJA ]", anatomy_title: "Faze izgradnje štanda Sarandrea: 5 inženjerskih razina",
+                anatomy_1_title: "Platforma i osnovna struktura", anatomy_1_spec: "BREZOVA ŠPERPLOČA + ALUMINIJSKI PROFIL", anatomy_1_desc: "Od poda s pločama od šperploče s aluminijskim rubnim trakama do gotove optički bijele platforme spremne za otvaranje sajma.",
+                anatomy_2_title: "Ovojnica i stolarija", anatomy_2_spec: "SIROVI MDF + EKSTRUDIRANI STUPCI", anatomy_2_desc: "Od MDF ploča pričvršćenih na modularne aluminijske strukture do monolitnih mat bijelih lakiranih zidova s 3D logotipom Sarandrea.",
+                anatomy_3_title: "Lightbox i rasvjetni dizajn", anatomy_3_spec: "LED TRAKE CRI>95 + ZATEGNUTA TKANINA", anatomy_3_desc: "Od okomitih redova ožičenih LED traka vidljivih u aluminijskoj šupljini do visokokvalitetne osvijetljene kutije bez spojeva.",
+                anatomy_4_title: "Veliki LED zaslon", anatomy_4_spec: "ČELIČNA REŠETKA + MODULARNI ORMARI", anatomy_4_desc: "Od crne čelične nosive mreže s prvim LED modulima i podatkovnim kabelima do velikog digitalnog zaslona ugrađenog u zid.",
+                anatomy_5_title: "Recepcija i prilagođeni namještaj", anatomy_5_spec: "STOLARIJSKA LJUSKA + LED TRAKA", anatomy_5_desc: "Od sirove stolarijske ljuske s donjom LED trakom do lakiranog recepcijskog stola sa svjetlosnom trakom, usklađenih stolica i staklenih vitrina.",
+                port_tag: "[ 04 / PORTFOLIO ]", port_title: "Realizirani projekti", filter_all: "Svi [20]", filter_med: "Medicina i farma", filter_ind: "Industrija i showroom", filter_auto: "Automobilizam", filter_fash: "Moda i luksuz", port_view: "Vidi projekt",
+                conf_tag: "[ 05 / KONFIGURATOR ]", conf_title: "Konfiguriraj svoj projekt", conf_step1_formula_title: "Projektna formula", conf_f1: "Prilagođeni štand", conf_f1_desc: "Ekskluzivni dizajn i namjenska proizvodnja", conf_f2: "Najam ključ u ruke", conf_f2_desc: "Fleksibilno rješenje sa strukturom i logistikom", conf_f3: "Showroom i korporativno", conf_f3_desc: "Trajne, muzejske ili korporativne postave", conf_step1_size_title: "Procijenjena površina", conf_s1: "< 30 m²", conf_s1_desc: "Unaprijed opremljen / Modularni štand", conf_s2: "30 – 80 m²", conf_s2_desc: "Kutni ili poluotočni štand po mjeri", conf_s3: "> 80 m²", conf_s3_desc: "Veliki sajamski otok / Dvostruki kat", btn_continue: "Nastavi na Korak 2",
+                conf_fair_label: "Naziv sajma / događaja i grad *", conf_fair_ph: "npr. MEDICA Düsseldorf", conf_period_label: "Očekivano razdoblje *", conf_period_ph: "npr. Studeni 2026", conf_amenities_label: "Integrirana oprema i usluge", conf_am1: "Ovješene američke trake i rasvjeta", conf_am2: "LED zaslon i multimedija", conf_am3: "Ugostiteljstvo i privatno skladište", conf_am4: "Logistika i međunarodna montaža", btn_back: "Natrag",
+                conf_summary_title: "Sažeti tehnički list", conf_summary_edit: "Uredi odabir", conf_sum_formula: "Formula:", conf_sum_size: "Površina:", conf_sum_fair: "Sajam / Grad:", conf_sum_period: "Razdoblje:", conf_sum_amenities: "Oprema:", conf_name_label: "Ime i prezime *", conf_name_ph: "Ivan Horvat", conf_company_label: "Tvrtka *", conf_company_ph: "Naziv tvrtke d.o.o.", conf_email_label: "Poslovna e-pošta *", conf_email_ph: "ivan@tvrtka.hr", conf_phone_label: "Telefon *", conf_phone_ph: "+385 000 000 000", conf_notes_label: "Dodatne napomene o projektu", conf_notes_ph: "Ukratko opišite svoje potrebe...", conf_gdpr_label: "Pristajem na obradu osobnih podataka prema GDPR-u kako bih bio kontaktiran u vezi ovog zahtjeva. *", conf_gdpr_link: "Pročitaj politiku", conf_gdpr_error: "Potrebno je prihvatiti za nastavak.", btn_send: "Pošalji zahtjev za projekt",
+                success_title: "Zahtjev uspješno poslan", success_msg: "Hvala što ste konfigurirali svoj projekt sa Studio013. Naš tim će vas kontaktirati u roku od 24 sata.", btn_new: "Konfiguriraj novi projekt", error_title: "Pogreška pri slanju", error_msg: "Došlo je do mrežne pogreške ili API ključ nije konfiguriran. Pokušajte ponovo kasnije.",
+                footer_addr_title: "Adresa", footer_menu_title: "Izbornik", footer_contacts_title: "Kontakti", footer_vat_label: "OIB", footer_email_label: "E-pošta:",
+                footer_menu_1: "Studio 013 - Cijeli svijet sajmova", footer_menu_2: "Pravila privatnosti i kolačića", footer_menu_2_short: "Privatnost i kolačići",
+                footer_copy: "© Copyright 2026 Studio013. Sva prava pridržana.",
+                privacy_tag: "[ GDPR // POLITIKA ]", privacy_title: "Pravila privatnosti i kolačića", privacy_owner_label: "Voditelj obrade",
+                privacy_h1: "1. Prikupljeni osobni podaci", privacy_p1: "Web stranica Studio013 prikuplja isključivo podatke koje korisnik dobrovoljno dostavlja putem Konfiguratora projekta (ime, tvrtka, e-pošta, telefon, napomene) i tehničke podatke o navigaciji (IP adresa, vrsta preglednika, operativni sustav) potrebne za ispravan prikaz stranica i agregirane statističke svrhe.",
+                privacy_h2: "2. Svrha i pravna osnova obrade", privacy_p2: "Podaci se obrađuju za: (a) odgovaranje na zahtjeve za ponudu i tehničko savjetovanje (pravna osnova: izvršenje predugovornih mjera, čl. 6.1.b GDPR); (b) ispunjavanje zakonskih obveza u poreznim i računovodstvenim pitanjima (čl. 6.1.c GDPR); (c) poboljšanje iskustva pregledavanja putem tehničkih kolačića (čl. 6.1.f GDPR, legitimni interes).",
+                privacy_h3: "3. Tehnički i analitički kolačići", privacy_p3: "Ova stranica koristi tehničke kolačiće potrebne za rad (sesija, preferencije jezika IT/EN/HR, pristanak na banner) i agregirane analitičke kolačiće za praćenje performansi. Nema komercijalnih profilirajućih kolačića bez izričitog pristanka korisnika putem panela \"Upravljanje preferencijama\".",
+                privacy_h4: "4. Zadržavanje i prijenos podataka", privacy_p4: "Podaci poslani putem Konfiguratora prenose se putem Web3Forms (vanjska usluga usklađena s GDPR-om) i čuvaju se onoliko koliko je potrebno za obradu zahtjeva, a u svakom slučaju ne duže od 24 mjeseca. Podaci se ne dijele s trećim stranama u komercijalne svrhe.",
+                privacy_h5: "5. Prava ispitanika", privacy_p5: "U bilo kojem trenutku korisnik može ostvariti prava pristupa, ispravka, brisanja, ograničenja, prenosivosti i prigovora (čl. 15-22 GDPR) pisanjem na info@studio013.it ili slanjem dopisa na sjedište u Via Giuseppe di Vittorio nr. 5, 20009 Vittuone (MI). Također ima pravo podnijeti pritužbu Talijanskom tijelu za zaštitu osobnih podataka.",
+                privacy_updated: "Zadnje ažuriranje: Siječanj 2026 — Rev. 013/PRV/2026", privacy_close: "Razumijem i zatvaram",
+                cookie_text: "Koristimo tehničke i profilirajuće kolačiće kako bismo poboljšali vaše iskustvo pregledavanja i analizirali promet stranice. Nastavkom pregledavanja ili klikom na \"Prihvati\", pristajete na uporabu kolačića kako je opisano u našoj ", cookie_manage: "Upravljaj", cookie_accept: "Prihvati sve"
+            }
+        };
+
+        let currentLang = localStorage.getItem('studio013_lang') || 'it';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            localStorage.setItem('studio013_lang', lang);
+            
+            // Update desktop language buttons
+            ['it', 'en', 'hr'].forEach(l => {
+                const btn = document.getElementById(`lang-${l}`);
+                if (!btn) return;
+                const isActive = l === lang;
+                btn.setAttribute('aria-pressed', isActive);
+                if (isActive) {
+                    btn.classList.remove('text-text-body', 'hover:text-primary', 'text-text-tech', 'hover:text-white');
+                    btn.classList.add('bg-primary', 'text-white');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add(window.innerWidth < 1024 ? 'text-text-tech' : 'text-text-body', window.innerWidth < 1024 ? 'hover:text-white' : 'hover:text-primary');
+                }
+            });
+
+            // Update mobile language buttons
+            const mobileLangBtns = document.querySelectorAll('#mobile-menu button[onclick^="setLanguage"]');
+            mobileLangBtns.forEach(btn => {
+                const onclick = btn.getAttribute('onclick');
+                const match = onclick.match(/setLanguage\('(\w+)'\)/);
+                if (!match) return;
+                const l = match[1];
+                const isActive = l === lang;
+                if (isActive) {
+                    btn.classList.remove('text-text-tech', 'hover:text-white');
+                    btn.classList.add('bg-primary', 'text-white');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('text-text-tech', 'hover:text-white');
+                }
+            });
+
+            // Update all data-i18n elements
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (I18N_DICTIONARY[lang][key]) {
+                    if (key.includes('title') || key === 'hero_title' || key === 'footer_title' || key === 'scanner_title') {
+                        el.innerHTML = I18N_DICTIONARY[lang][key];
+                    } else {
+                        el.textContent = I18N_DICTIONARY[lang][key];
+                    }
+                }
+            });
+
+            // Update placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (I18N_DICTIONARY[lang][key]) {
+                    el.placeholder = I18N_DICTIONARY[lang][key];
+                }
+            });
+
+            // Update dynamic components
+            updateTelemetry(document.getElementById('slider-input').value);
+            if (configuratorState.step === 3) updateSummaryUI();
+            updatePresetBanner();
+        }
+
+        function updateTelemetry(pos) {
+            const template = I18N_DICTIONARY[currentLang].scan_telemetry;
+            document.getElementById('telemetry-badge').textContent = template.replace('{pos}', Math.round(pos));
+        }
+
+        function updatePresetBanner() {
+            const banner = document.getElementById('config-preset-banner');
+            if (banner && !banner.classList.contains('hidden') && currentProjectForPreset) {
+                const tpl = I18N_DICTIONARY[currentLang].preset_banner;
+                if (tpl) {
+                    banner.textContent = tpl.replace('{client}', currentProjectForPreset.client).replace('{area}', currentProjectForPreset.specs.area);
+                }
+            }
+        }
+
+        // ==========================================
+        // SCANNER INTERATTIVO & ANATOMIA
+        // ==========================================
+        const scannerViewport = document.getElementById('scanner-viewport');
+        const sliderInput = document.getElementById('slider-input');
+        let scannerDemoPlayed = false;
+
+        function setScanPos(pos) {
+            scannerViewport.style.setProperty('--scan-pos', pos + '%');
+            sliderInput.value = pos;
+            sliderInput.setAttribute('aria-valuenow', pos);
+            updateTelemetry(pos);
+        }
+
+        function animateScanPos(target) {
+            gsap.to(scannerViewport, {
+                "--scan-pos": target + "%", duration: 0.65, ease: "power3.out",
+                onUpdate: function() {
+                    const val = parseFloat(this.targets()[0].style.getPropertyValue('--scan-pos'));
+                    sliderInput.value = val;
+                    sliderInput.setAttribute('aria-valuenow', Math.round(val));
+                    updateTelemetry(val);
+                }
+            });
+        }
+
+        if (scannerViewport && sliderInput) {
+            let isDragging = false;
+            const updateSlider = (clientX) => {
+                const rect = scannerViewport.getBoundingClientRect();
+                let pos = ((clientX - rect.left) / rect.width) * 100;
+                pos = Math.max(0, Math.min(100, pos));
+                setScanPos(pos);
+            };
+            scannerViewport.addEventListener('pointerdown', (e) => { isDragging = true; scannerViewport.setPointerCapture(e.pointerId); updateSlider(e.clientX); });
+            scannerViewport.addEventListener('pointermove', (e) => { if (!isDragging) return; e.preventDefault(); updateSlider(e.clientX); });
+            scannerViewport.addEventListener('pointerup', (e) => { isDragging = false; scannerViewport.releasePointerCapture(e.pointerId); });
+            sliderInput.addEventListener('keydown', (e) => {
+                let val = parseFloat(sliderInput.value);
+                if (e.key === 'ArrowLeft') { e.preventDefault(); val = Math.max(0, val - 2); } 
+                else if (e.key === 'ArrowRight') { e.preventDefault(); val = Math.min(100, val + 2); } 
+                else return;
+                setScanPos(val);
+            });
+        }
+
+        ScrollTrigger.create({
+            trigger: "#scanner-section", start: "top 70%",
+            onEnter: () => {
+                if (!scannerDemoPlayed) {
+                    scannerDemoPlayed = true;
+                    gsap.timeline()
+                        .to(scannerViewport, { "--scan-pos": "30%", duration: 1.5, ease: "power2.inOut", onUpdate: () => updateTelemetry(30) })
+                        .to(scannerViewport, { "--scan-pos": "68%", duration: 1.5, ease: "power2.inOut", onUpdate: () => updateTelemetry(68) })
+                        .to(scannerViewport, { "--scan-pos": "50%", duration: 1, ease: "power2.inOut", onUpdate: () => { sliderInput.value = 50; updateTelemetry(50); }});
+                }
+            }, once: true
+        });
+
+        function triggerHotspot(id) {
+            clearHotspots();
+            const hotspot = document.getElementById(`hotspot-${id}`);
+            if (hotspot) {
+                hotspot.classList.add('active');
+                const targetLeft = { 1: 22, 2: 50, 3: 28, 4: 50, 5: 52 }[id];
+                if (targetLeft !== undefined) animateScanPos(targetLeft + 3);
+            }
+        }
+        function clearHotspots() { document.querySelectorAll('.hotspot').forEach(h => h.classList.remove('active')); }
+
+        // ==========================================
+        // PORTFOLIO & LIGHTBOX
+        // ==========================================
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        const portfolioData = Array.from(portfolioItems).map(item => ({
+            src: item.querySelector('img').src,
+            title: item.querySelector('h3').textContent,
+            category: item.querySelector('span').textContent
+        }));
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-primary', 'text-white', 'border-primary');
+                    b.classList.add('text-text-body', 'border-gray-300');
+                });
+                btn.classList.remove('text-text-body', 'border-gray-300');
+                btn.classList.add('bg-primary', 'text-white', 'border-primary');
+
+                const filterValue = btn.getAttribute('data-filter');
+                portfolioItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        gsap.to(item, { opacity: 1, scale: 1, duration: 0.4, display: 'block' });
+                    } else {
+                        gsap.to(item, { opacity: 0, scale: 0.9, duration: 0.4, display: 'none' });
+                    }
+                });
+            });
+        });
+
+        let currentIndex = 0;
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxTitle = document.getElementById('lightbox-title');
+        const lightboxCategory = document.getElementById('lightbox-category');
+
+        function openLightbox(index) {
+            currentIndex = index;
+            updateLightboxContent();
+            lightbox.classList.remove('hidden');
+            void lightbox.offsetWidth;
+            lightbox.classList.remove('opacity-0');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.add('opacity-0');
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        function updateLightboxContent() {
+            const data = portfolioData[currentIndex];
+            lightboxImg.src = data.src;
+            lightboxTitle.textContent = data.title;
+            lightboxCategory.textContent = data.category;
+        }
+
+        portfolioItems.forEach((item, index) => item.addEventListener('click', () => openLightbox(index)));
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        document.getElementById('lightbox-next').addEventListener('click', (e) => { e.stopPropagation(); currentIndex = (currentIndex + 1) % portfolioData.length; updateLightboxContent(); });
+        document.getElementById('lightbox-prev').addEventListener('click', (e) => { e.stopPropagation(); currentIndex = (currentIndex - 1 + portfolioData.length) % portfolioData.length; updateLightboxContent(); });
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+
+        // ==========================================
+        // MODALE PRIVACY & COOKIE POLICY
+        // ==========================================
+        function openPrivacyModal() {
+            const modal = document.getElementById('privacy-modal');
+            modal.classList.remove('hidden');
+            void modal.offsetWidth;
+            modal.classList.remove('opacity-0');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePrivacyModal() {
+            const modal = document.getElementById('privacy-modal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                if (document.getElementById('lightbox').classList.contains('hidden')) {
+                    document.body.style.overflow = '';
+                }
+            }, 300);
+        }
+
+        document.getElementById('privacy-close').addEventListener('click', closePrivacyModal);
+        document.getElementById('privacy-modal').addEventListener('click', (e) => { if (e.target.id === 'privacy-modal') closePrivacyModal(); });
+
+        // ==========================================
+        // CONFIGURATORE B2B A 3 STEP
+        // ==========================================
+        let configuratorState = {
+            step: 1, formula: '', size: '', fair: '', period: '', amenities: [],
+            name: '', company: '', email: '', phone: '', notes: '', gdpr: false
+        };
+        let currentProjectForPreset = null;
+
+        function updateConfig(key, value) {
+            configuratorState[key] = value;
+            if (key === 'gdpr') document.getElementById('gdpr-error').classList.add('hidden');
+        }
+
+        function toggleAmenity(btn, value) {
+            const index = configuratorState.amenities.indexOf(value);
+            if (index > -1) {
+                configuratorState.amenities.splice(index, 1);
+                btn.classList.remove('bg-primary', 'text-white', 'border-primary');
+                btn.classList.add('bg-white', 'text-text-body', 'border-gray-200');
+            } else {
+                configuratorState.amenities.push(value);
+                btn.classList.add('bg-primary', 'text-white', 'border-primary');
+                btn.classList.remove('bg-white', 'text-text-body', 'border-gray-200');
+            }
+        }
+
+        function validateStep(step) {
+            if (step === 1) return configuratorState.formula !== '' && configuratorState.size !== '';
+            if (step === 2) return configuratorState.fair.trim() !== '' && configuratorState.period.trim() !== '';
+            if (step === 3) {
+                if (!configuratorState.gdpr) {
+                    document.getElementById('gdpr-error').classList.remove('hidden');
+                    return false;
+                }
+                return configuratorState.name.trim() !== '' && configuratorState.company.trim() !== '' && 
+                       configuratorState.email.trim() !== '' && configuratorState.phone.trim() !== '';
+            }
+            return true;
+        }
+
+        function nextStep(targetStep) {
+            if (!validateStep(configuratorState.step)) return;
+            configuratorState.step = targetStep;
+            renderStep();
+        }
+
+        function prevStep(targetStep) {
+            configuratorState.step = targetStep;
+            renderStep();
+        }
+
+        function renderStep() {
+            document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`step-${configuratorState.step}`).classList.remove('hidden');
+            
+            const progress = (configuratorState.step / 3) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            
+            for (let i = 1; i <= 3; i++) {
+                const indicator = document.getElementById(`step-indicator-${i}`);
+                if (i <= configuratorState.step) {
+                    indicator.classList.remove('text-text-tech');
+                    indicator.classList.add('text-primary', 'font-bold');
+                } else {
+                    indicator.classList.add('text-text-tech');
+                    indicator.classList.remove('text-primary', 'font-bold');
+                }
+            }
+
+            if (configuratorState.step === 3) updateSummaryUI();
+        }
+
+        function updateSummaryUI() {
+            document.getElementById('sum-formula').textContent = configuratorState.formula || '-';
+            document.getElementById('sum-size').textContent = configuratorState.size || '-';
+            document.getElementById('sum-fair').textContent = configuratorState.fair || '-';
+            document.getElementById('sum-period').textContent = configuratorState.period || '-';
+            document.getElementById('sum-amenities').textContent = configuratorState.amenities.length > 0 ? configuratorState.amenities.join(', ') : '-';
+        }
+
+        async function submitConfigurator() {
+            if (!validateStep(3)) return;
+
+            const submitBtn = document.getElementById('submit-btn');
+            const submitText = document.getElementById('submit-text');
+            const spinner = document.getElementById('submit-spinner');
+
+            submitBtn.disabled = true;
+            submitText.textContent = currentLang === 'it' ? 'Invio in corso...' : currentLang === 'hr' ? 'Slanje u tijeku...' : 'Sending...';
+            spinner.classList.remove('hidden');
+
+            const refCode = `RIF-013-${new Date().getFullYear()}-${Math.floor(100 + Math.random() * 900)}`;
+            const apiKey = "INSERISCI_QUI_LA_TUA_CHIAVE_WEB3FORMS";
+
+            const payload = {
+                access_key: apiKey,
+                subject: `Richiesta Progetto Studio013 — ${configuratorState.company} (${configuratorState.size})`,
+                from_name: configuratorState.name,
+                email: configuratorState.email,
+                message: `
+NUOVA RICHIESTA PROGETTO STUDIO013
+Codice Riferimento: ${refCode}
+
+--- DATI AZIENDALI ---
+Nome: ${configuratorState.name}
+Azienda: ${configuratorState.company}
+Email: ${configuratorState.email}
+Telefono: ${configuratorState.phone}
+
+--- CONFIGURAZIONE ---
+Formula: ${configuratorState.formula}
+Metratura: ${configuratorState.size}
+Fiera / Città: ${configuratorState.fair}
+Periodo: ${configuratorState.period}
+Dotazioni: ${configuratorState.amenities.join(', ') || 'Nessuna'}
+
+--- NOTE ---
+${configuratorState.notes || 'Nessuna nota aggiuntiva'}
+
+Consenso GDPR: ${configuratorState.gdpr ? 'Sì' : 'No'}
+
+--- TITOLARE ---
+Studio013 — Via Giuseppe di Vittorio nr. 5, 20009 Vittuone (MI) — P.IVA 08149930961
+                `.trim()
+            };
+
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('step-3').classList.add('hidden');
+                    document.getElementById('step-success').classList.remove('hidden');
+                    document.getElementById('success-ref').textContent = refCode;
+                    document.getElementById('progress-bar').style.width = '100%';
+                    document.querySelectorAll('[id^="step-indicator-"]').forEach(el => {
+                        el.classList.remove('text-text-tech');
+                        el.classList.add('text-primary', 'font-bold');
+                    });
+                } else {
+                    throw new Error(data.message || 'Submission failed');
+                }
+            } catch (error) {
+                console.error('Web3Forms Error:', error);
+                document.getElementById('step-3').classList.add('hidden');
+                document.getElementById('step-error').classList.remove('hidden');
+            } finally {
+                submitBtn.disabled = false;
+                submitText.textContent = I18N_DICTIONARY[currentLang].btn_send;
+                spinner.classList.add('hidden');
+            }
+        }
+
+        function resetConfigurator() {
+            configuratorState = { step: 1, formula: '', size: '', fair: '', period: '', amenities: [], name: '', company: '', email: '', phone: '', notes: '', gdpr: false };
+            document.getElementById('config-form').reset();
+            document.querySelectorAll('.amenity-pill').forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-white', 'border-primary');
+                btn.classList.add('bg-white', 'text-text-body', 'border-gray-200');
+            });
+            document.getElementById('step-success').classList.add('hidden');
+            document.getElementById('step-error').classList.add('hidden');
+            const banner = document.getElementById('config-preset-banner');
+            if (banner) banner.classList.add('hidden');
+            currentProjectForPreset = null;
+            renderStep();
+        }
+
+        // ==========================================
+        // LOGICA GENERALE (GSAP, Cookie, Menu)
+        // ==========================================
+        gsap.registerPlugin(ScrollTrigger);
+
+        const revealElements = document.querySelectorAll('.gsap-reveal');
+        revealElements.forEach(el => {
+            gsap.fromTo(el, 
+                { y: 50, opacity: 0 },
+                {
+                    y: 0, opacity: 1, duration: 0.8, ease: "power3.out",
+                    scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" }
+                }
+            );
+        });
+
+        const revealImgs = document.querySelectorAll('.gsap-reveal-img');
+        revealImgs.forEach(el => {
+            gsap.fromTo(el,
+                { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)", opacity: 0 },
+                {
+                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", opacity: 1, duration: 1.2, ease: "power3.out",
+                    scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none reverse" }
+                }
+            );
+        });
+
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMobileMenuBtn = document.getElementById('close-mobile-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.remove('translate-x-full'));
+        closeMobileMenuBtn.addEventListener('click', () => mobileMenu.classList.add('translate-x-full'));
+        mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('translate-x-full')));
+
+        const cookieBanner = document.getElementById('cookie-banner');
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => cookieBanner.classList.remove('translate-y-full'), 1000);
+        }
+        document.getElementById('cookie-accept').addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieBanner.classList.add('translate-y-full');
+        });
+
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) header.classList.add('shadow-sm');
+            else header.classList.remove('shadow-sm');
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (!document.getElementById('privacy-modal').classList.contains('hidden')) closePrivacyModal();
+                else if (!lightbox.classList.contains('hidden')) closeLightbox();
+            }
+            if (lightbox.classList.contains('hidden')) return;
+            if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % portfolioData.length; updateLightboxContent(); }
+            if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + portfolioData.length) % portfolioData.length; updateLightboxContent(); }
+        });
+
+        // Init Language
+        document.addEventListener('DOMContentLoaded', () => {
+            setLanguage(currentLang);
+        });
+    </script>
+</body>
+</html>
